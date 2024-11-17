@@ -228,110 +228,214 @@
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
-                <pre class="highlight"><code class="language-python">class FineTuner:
-    """
-    Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">FineTuner</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.</span>
 
-    Attributes
-    ----------
-    llm : LLM
-        An instance of the LLM class, representing the language model to be fine-tuned.
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    llm : LLM</span>
+<span class="sd">        An instance of the LLM class, representing the language model to be fine-tuned.</span>
 
-    Methods
-    -------
-    fine_tune(texts, output_dir="./fine_tuned_model")
-        Fine-tunes the LLM's model with the provided list of texts.
-    """
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    fine_tune(texts, output_dir=&quot;./fine_tuned_model&quot;)</span>
+<span class="sd">        Fine-tunes the LLM&#39;s model with the provided list of texts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, llm: LLM):
-        """
-        Initializes the FineTuner with an LLM instance.
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the FineTuner with an LLM instance.</span>
 
-        Parameters
-        ----------
-        llm : LLM
-            An instance of the LLM class to be fine-tuned.
-        """
-        self.llm = llm
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        llm : LLM</span>
+<span class="sd">            An instance of the LLM class to be fine-tuned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
 
-    def fine_tune(self, texts: List[str], output_dir: str = "./fine_tuned_model"):
-        """
-        Fine-tunes the LLM model with the provided list of texts.
+    <span class="k">def</span> <span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fine-tunes the LLM model with the provided list of texts.</span>
 
-        This method tokenizes the input texts, prepares them into a dataset, and trains the model using
-        the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.
+<span class="sd">        This method tokenizes the input texts, prepares them into a dataset, and trains the model using</span>
+<span class="sd">        the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.</span>
 
-        Parameters
-        ----------
-        texts : List[str]
-            A list of strings to be used for training the model.
-        output_dir : str, optional
-            The directory where the fine-tuned model will be saved (default is "./fine_tuned_model").
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        texts : List[str]</span>
+<span class="sd">            A list of strings to be used for training the model.</span>
+<span class="sd">        output_dir : str, optional</span>
+<span class="sd">            The directory where the fine-tuned model will be saved (default is &quot;./fine_tuned_model&quot;).</span>
 
-        Returns
-        -------
-        LLM
-            The LLM instance updated to use the fine-tuned model.
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        LLM</span>
+<span class="sd">            The LLM instance updated to use the fine-tuned model.</span>
 
-        Raises
-        ------
-        ValueError
-            If the model category of the LLM is not "huggingface".
-        """
-        if self.llm.model_category != "huggingface":
-            raise ValueError(
-                "Fine-tuning is only supported for Hugging Face models in this implementation.")
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the model category of the LLM is not &quot;huggingface&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_category</span> <span class="o">!=</span> <span class="s2">&quot;huggingface&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Fine-tuning is only supported for Hugging Face models in this implementation.&quot;</span><span class="p">)</span>
 
-        # Load the model and tokenizer
-        model = AutoModelForCausalLM.from_pretrained(self.llm.model_name)
-        tokenizer = AutoTokenizer.from_pretrained(self.llm.model_name)
-        # Set pad_token to eos_token
-        tokenizer.pad_token = tokenizer.eos_token
+        <span class="c1"># Load the model and tokenizer</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="c1"># Set pad_token to eos_token</span>
+        <span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span>
 
-        # Tokenize data
-        encodings = tokenizer(
-            texts,
-            truncation=True,
-            padding="max_length",
-            max_length=512,  # Adjust max_length as needed
-            return_tensors="pt"  # Return PyTorch tensors
-        )
+        <span class="c1"># Tokenize data</span>
+        <span class="n">encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span>
+            <span class="n">texts</span><span class="p">,</span>
+            <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>  <span class="c1"># Adjust max_length as needed</span>
+            <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span>  <span class="c1"># Return PyTorch tensors</span>
+        <span class="p">)</span>
 
-        # Create dataset from encodings
-        train_dataset = CustomDataset(encodings)
+        <span class="c1"># Create dataset from encodings</span>
+        <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">CustomDataset</span><span class="p">(</span><span class="n">encodings</span><span class="p">)</span>
 
-        # Set training arguments
-        training_args = TrainingArguments(
-            output_dir=output_dir,
-            eval_strategy="no",
-            learning_rate=2e-5,
-            weight_decay=0.01,
-            num_train_epochs=3,
-            per_device_train_batch_size=8,
-            save_total_limit=2,  # Save only the last 2 models
-            logging_dir='./logs',  # Directory for storing logs
-            logging_steps=10,  # Log every 10 steps
-        )
+        <span class="c1"># Set training arguments</span>
+        <span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">eval_strategy</span><span class="o">=</span><span class="s2">&quot;no&quot;</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
+            <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+            <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+            <span class="n">save_total_limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="c1"># Save only the last 2 models</span>
+            <span class="n">logging_dir</span><span class="o">=</span><span class="s1">&#39;./logs&#39;</span><span class="p">,</span>  <span class="c1"># Directory for storing logs</span>
+            <span class="n">logging_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Log every 10 steps</span>
+        <span class="p">)</span>
 
-        # Initialize Trainer
-        trainer = Trainer(
-            model=model,
-            args=training_args,
-            train_dataset=train_dataset
-        )
+        <span class="c1"># Initialize Trainer</span>
+        <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+            <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span>
+        <span class="p">)</span>
 
-        # Fine-tune the model
-        trainer.train()
+        <span class="c1"># Fine-tune the model</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
-        # Save the fine-tuned model
-        model.save_pretrained(output_dir)
-        tokenizer.save_pretrained(output_dir)
+        <span class="c1"># Save the fine-tuned model</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
 
-        # Update the LLM instance to use the fine-tuned model
-        self.llm.model_name = output_dir
-        self.llm.model = self.llm._initialize_llm()
+        <span class="c1"># Update the LLM instance to use the fine-tuned model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">output_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">_initialize_llm</span><span class="p">()</span>
 
-        return self.llm</code></pre>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -350,7 +454,7 @@
 
 
 <h3 id="llamarch.common.fine_tuner.FineTuner.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(llm)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">llm</span><span class="p">)</span></code>
 
 </h3>
 
@@ -385,16 +489,26 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self, llm: LLM):
-    """
-    Initializes the FineTuner with an LLM instance.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes the FineTuner with an LLM instance.</span>
 
-    Parameters
-    ----------
-    llm : LLM
-        An instance of the LLM class to be fine-tuned.
-    """
-    self.llm = llm</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    llm : LLM</span>
+<span class="sd">        An instance of the LLM class to be fine-tuned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -404,7 +518,7 @@
 
 
 <h3 id="llamarch.common.fine_tuner.FineTuner.fine_tune" class="doc doc-heading">
-            <code class="highlight language-python">fine_tune(texts, output_dir='./fine_tuned_model')</code>
+            <code class="highlight language-python"><span class="n">fine_tune</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;./fine_tuned_model&#39;</span><span class="p">)</span></code>
 
 </h3>
 
@@ -497,84 +611,162 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
-              <pre class="highlight"><code class="language-python">def fine_tune(self, texts: List[str], output_dir: str = "./fine_tuned_model"):
-    """
-    Fine-tunes the LLM model with the provided list of texts.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fine-tunes the LLM model with the provided list of texts.</span>
 
-    This method tokenizes the input texts, prepares them into a dataset, and trains the model using
-    the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.
+<span class="sd">    This method tokenizes the input texts, prepares them into a dataset, and trains the model using</span>
+<span class="sd">    the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.</span>
 
-    Parameters
-    ----------
-    texts : List[str]
-        A list of strings to be used for training the model.
-    output_dir : str, optional
-        The directory where the fine-tuned model will be saved (default is "./fine_tuned_model").
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    texts : List[str]</span>
+<span class="sd">        A list of strings to be used for training the model.</span>
+<span class="sd">    output_dir : str, optional</span>
+<span class="sd">        The directory where the fine-tuned model will be saved (default is &quot;./fine_tuned_model&quot;).</span>
 
-    Returns
-    -------
-    LLM
-        The LLM instance updated to use the fine-tuned model.
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    LLM</span>
+<span class="sd">        The LLM instance updated to use the fine-tuned model.</span>
 
-    Raises
-    ------
-    ValueError
-        If the model category of the LLM is not "huggingface".
-    """
-    if self.llm.model_category != "huggingface":
-        raise ValueError(
-            "Fine-tuning is only supported for Hugging Face models in this implementation.")
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the model category of the LLM is not &quot;huggingface&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_category</span> <span class="o">!=</span> <span class="s2">&quot;huggingface&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Fine-tuning is only supported for Hugging Face models in this implementation.&quot;</span><span class="p">)</span>
 
-    # Load the model and tokenizer
-    model = AutoModelForCausalLM.from_pretrained(self.llm.model_name)
-    tokenizer = AutoTokenizer.from_pretrained(self.llm.model_name)
-    # Set pad_token to eos_token
-    tokenizer.pad_token = tokenizer.eos_token
+    <span class="c1"># Load the model and tokenizer</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="c1"># Set pad_token to eos_token</span>
+    <span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span>
 
-    # Tokenize data
-    encodings = tokenizer(
-        texts,
-        truncation=True,
-        padding="max_length",
-        max_length=512,  # Adjust max_length as needed
-        return_tensors="pt"  # Return PyTorch tensors
-    )
+    <span class="c1"># Tokenize data</span>
+    <span class="n">encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span>
+        <span class="n">texts</span><span class="p">,</span>
+        <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>  <span class="c1"># Adjust max_length as needed</span>
+        <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span>  <span class="c1"># Return PyTorch tensors</span>
+    <span class="p">)</span>
 
-    # Create dataset from encodings
-    train_dataset = CustomDataset(encodings)
+    <span class="c1"># Create dataset from encodings</span>
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">CustomDataset</span><span class="p">(</span><span class="n">encodings</span><span class="p">)</span>
 
-    # Set training arguments
-    training_args = TrainingArguments(
-        output_dir=output_dir,
-        eval_strategy="no",
-        learning_rate=2e-5,
-        weight_decay=0.01,
-        num_train_epochs=3,
-        per_device_train_batch_size=8,
-        save_total_limit=2,  # Save only the last 2 models
-        logging_dir='./logs',  # Directory for storing logs
-        logging_steps=10,  # Log every 10 steps
-    )
+    <span class="c1"># Set training arguments</span>
+    <span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">eval_strategy</span><span class="o">=</span><span class="s2">&quot;no&quot;</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">save_total_limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="c1"># Save only the last 2 models</span>
+        <span class="n">logging_dir</span><span class="o">=</span><span class="s1">&#39;./logs&#39;</span><span class="p">,</span>  <span class="c1"># Directory for storing logs</span>
+        <span class="n">logging_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Log every 10 steps</span>
+    <span class="p">)</span>
 
-    # Initialize Trainer
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset
-    )
+    <span class="c1"># Initialize Trainer</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+        <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span>
+    <span class="p">)</span>
 
-    # Fine-tune the model
-    trainer.train()
+    <span class="c1"># Fine-tune the model</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
-    # Save the fine-tuned model
-    model.save_pretrained(output_dir)
-    tokenizer.save_pretrained(output_dir)
+    <span class="c1"># Save the fine-tuned model</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
 
-    # Update the LLM instance to use the fine-tuned model
-    self.llm.model_name = output_dir
-    self.llm.model = self.llm._initialize_llm()
+    <span class="c1"># Update the LLM instance to use the fine-tuned model</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">output_dir</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">_initialize_llm</span><span class="p">()</span>
 
-    return self.llm</code></pre>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 

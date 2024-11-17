@@ -179,59 +179,112 @@
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/patterns/agent_swarm/__init__.py</code></summary>
-                <pre class="highlight"><code class="language-python">class AgentSwarm:
-    def __init__(self, agent_list):
-        """
-        Initialize the AgentSwarm with a list of agents, a consensus layer, and an output aggregator.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AgentSwarm</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the AgentSwarm with a list of agents, a consensus layer, and an output aggregator.</span>
 
-        Parameters
-        ----------
-        agent_list : list
-            A list of agent objects that will be used to generate responses and participate in consensus.
-        """
-        self.agent_list = agent_list
-        self.consensus_layer = ConsensusLayer()
-        self.aggregator = OutputAggregator()
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        agent_list : list</span>
+<span class="sd">            A list of agent objects that will be used to generate responses and participate in consensus.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span> <span class="o">=</span> <span class="n">agent_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consensus_layer</span> <span class="o">=</span> <span class="n">ConsensusLayer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aggregator</span> <span class="o">=</span> <span class="n">OutputAggregator</span><span class="p">()</span>
 
-    async def _gather_responses(self, agent_list, query):
-        """
-        Gather responses from all agents asynchronously.
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_gather_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gather responses from all agents asynchronously.</span>
 
-        Parameters
-        ----------
-        agent_list : list
-            A list of agent objects that will generate responses.
-        query : str
-            The query or request to be sent to the agents for generating responses.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        agent_list : list</span>
+<span class="sd">            A list of agent objects that will generate responses.</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query or request to be sent to the agents for generating responses.</span>
 
-        Returns
-        -------
-        list
-            A list of responses generated by each agent in the agent_list.
-        """
-        return await asyncio.gather(*(a.generate_response(query) for a in agent_list))
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list of responses generated by each agent in the agent_list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">agent_list</span><span class="p">))</span>
 
-    def run_iteration(self, query):
-        """
-        Run one iteration of the AgentSwarm, which gathers responses, computes consensus, and aggregates the output.
+    <span class="k">def</span> <span class="nf">run_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run one iteration of the AgentSwarm, which gathers responses, computes consensus, and aggregates the output.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to be processed by the agents in the swarm.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to be processed by the agents in the swarm.</span>
 
-        Returns
-        -------
-        object
-            The aggregated output based on the consensus of the agent responses.
-        """
-        # Get the consensus
-        responses = asyncio.run(self._gather_responses(self.agent_list, query))
-        consensus_result = self.consensus_layer.get_consensus(
-            responses, self.agent_list)
-        output = self.aggregator.aggregate_output(consensus_result)
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The aggregated output based on the consensus of the agent responses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the consensus</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gather_responses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
+        <span class="n">consensus_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus_layer</span><span class="o">.</span><span class="n">get_consensus</span><span class="p">(</span>
+            <span class="n">responses</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate_output</span><span class="p">(</span><span class="n">consensus_result</span><span class="p">)</span>
 
-        return output</code></pre>
+        <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -250,7 +303,7 @@
 
 
 <h3 id="llamarch.patterns.agent_swarm.AgentSwarm.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(agent_list)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">agent_list</span><span class="p">)</span></code>
 
 </h3>
 
@@ -285,18 +338,30 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/agent_swarm/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self, agent_list):
-    """
-    Initialize the AgentSwarm with a list of agents, a consensus layer, and an output aggregator.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the AgentSwarm with a list of agents, a consensus layer, and an output aggregator.</span>
 
-    Parameters
-    ----------
-    agent_list : list
-        A list of agent objects that will be used to generate responses and participate in consensus.
-    """
-    self.agent_list = agent_list
-    self.consensus_layer = ConsensusLayer()
-    self.aggregator = OutputAggregator()</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    agent_list : list</span>
+<span class="sd">        A list of agent objects that will be used to generate responses and participate in consensus.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span> <span class="o">=</span> <span class="n">agent_list</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">consensus_layer</span> <span class="o">=</span> <span class="n">ConsensusLayer</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">aggregator</span> <span class="o">=</span> <span class="n">OutputAggregator</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -306,7 +371,7 @@
 
 
 <h3 id="llamarch.patterns.agent_swarm.AgentSwarm.run_iteration" class="doc doc-heading">
-            <code class="highlight language-python">run_iteration(query)</code>
+            <code class="highlight language-python"><span class="n">run_iteration</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></code>
 
 </h3>
 
@@ -364,27 +429,48 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/agent_swarm/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def run_iteration(self, query):
-    """
-    Run one iteration of the AgentSwarm, which gathers responses, computes consensus, and aggregates the output.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">run_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run one iteration of the AgentSwarm, which gathers responses, computes consensus, and aggregates the output.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to be processed by the agents in the swarm.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to be processed by the agents in the swarm.</span>
 
-    Returns
-    -------
-    object
-        The aggregated output based on the consensus of the agent responses.
-    """
-    # Get the consensus
-    responses = asyncio.run(self._gather_responses(self.agent_list, query))
-    consensus_result = self.consensus_layer.get_consensus(
-        responses, self.agent_list)
-    output = self.aggregator.aggregate_output(consensus_result)
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object</span>
+<span class="sd">        The aggregated output based on the consensus of the agent responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get the consensus</span>
+    <span class="n">responses</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gather_responses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
+    <span class="n">consensus_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus_layer</span><span class="o">.</span><span class="n">get_consensus</span><span class="p">(</span>
+        <span class="n">responses</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate_output</span><span class="p">(</span><span class="n">consensus_result</span><span class="p">)</span>
 
-    return output</code></pre>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 

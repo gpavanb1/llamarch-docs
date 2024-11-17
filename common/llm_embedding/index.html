@@ -179,86 +179,166 @@
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
-                <pre class="highlight"><code class="language-python">class LLMEmbedding:
-    def __init__(self,
-                 model_category: str,
-                 embedding_model_name: str,
-                 api_key: Optional[str] = None,
-                 model_parameters: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">LLMEmbedding</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">model_category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">embedding_model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">model_parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.</span>
 
-        Parameters
-        ----------
-        model_category : str
-            The name of the language model provider (e.g., 'openai', 'huggingface', 'cohere').
-        embedding_model_name : str
-            The name of the embedding model.
-        api_key : str, optional
-            The API key for the selected provider. Default is None.
-        model_parameters : dict, optional
-            Additional parameters for model configuration. Default is an empty dictionary if not provided.
-        """
-        self.model_category = model_category.lower()
-        self.embedding_model_name = embedding_model_name.lower(
-        ) if embedding_model_name else None
-        self.api_key = api_key
-        self.model_parameters = model_parameters or {}
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model_category : str</span>
+<span class="sd">            The name of the language model provider (e.g., &#39;openai&#39;, &#39;huggingface&#39;, &#39;cohere&#39;).</span>
+<span class="sd">        embedding_model_name : str</span>
+<span class="sd">            The name of the embedding model.</span>
+<span class="sd">        api_key : str, optional</span>
+<span class="sd">            The API key for the selected provider. Default is None.</span>
+<span class="sd">        model_parameters : dict, optional</span>
+<span class="sd">            Additional parameters for model configuration. Default is an empty dictionary if not provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_category</span> <span class="o">=</span> <span class="n">model_category</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">embedding_model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span>
+        <span class="p">)</span> <span class="k">if</span> <span class="n">embedding_model_name</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_parameters</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="ow">or</span> <span class="p">{}</span>
 
-        # Initialize the language model and embedding model
-        self.embedding_model = self._initialize_embeddings()
+        <span class="c1"># Initialize the language model and embedding model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_embeddings</span><span class="p">()</span>
 
-    def _initialize_embeddings(self):
-        """
-        Initialize the embedding model based on the specified category.
+    <span class="k">def</span> <span class="nf">_initialize_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the embedding model based on the specified category.</span>
 
-        Returns
-        -------
-        object
-            The initialized embedding model corresponding to the selected provider.
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The initialized embedding model corresponding to the selected provider.</span>
 
-        Raises
-        ------
-        ValueError
-            If an unsupported model category is provided.
-        """
-        if self.model_category == "openai":
-            from langchain_openai import OpenAIEmbeddings
-            return OpenAIEmbeddings(
-                openai_api_key=self.api_key,
-                model=self.embedding_model_name or "text-embedding-ada-002"
-            )
-        elif self.model_category == "huggingface":
-            from langchain_huggingface import HuggingFaceEmbeddings
-            return HuggingFaceEmbeddings(
-                model_name=self.embedding_model_name,
-                encode_kwargs={"device": "cpu", "batch_size": 32}
-            )
-        elif self.model_category == "cohere":
-            from langchain_community.embeddings import CohereEmbeddings
-            return CohereEmbeddings(
-                cohere_api_key=self.api_key,
-                model=self.embedding_model_name
-            )
-        else:
-            raise ValueError(
-                f"Unsupported model category: {self.model_category}")
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If an unsupported model category is provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_category</span> <span class="o">==</span> <span class="s2">&quot;openai&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+            <span class="k">return</span> <span class="n">OpenAIEmbeddings</span><span class="p">(</span>
+                <span class="n">openai_api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+                <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model_name</span> <span class="ow">or</span> <span class="s2">&quot;text-embedding-ada-002&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_category</span> <span class="o">==</span> <span class="s2">&quot;huggingface&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">langchain_huggingface</span> <span class="kn">import</span> <span class="n">HuggingFaceEmbeddings</span>
+            <span class="k">return</span> <span class="n">HuggingFaceEmbeddings</span><span class="p">(</span>
+                <span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model_name</span><span class="p">,</span>
+                <span class="n">encode_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_category</span> <span class="o">==</span> <span class="s2">&quot;cohere&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">langchain_community.embeddings</span> <span class="kn">import</span> <span class="n">CohereEmbeddings</span>
+            <span class="k">return</span> <span class="n">CohereEmbeddings</span><span class="p">(</span>
+                <span class="n">cohere_api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+                <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model_name</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported model category: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    def get_embeddings(self, text: str) -&gt; List[float]:
-        """
-        Get embeddings for a given text using the specified embedding model.
+    <span class="k">def</span> <span class="nf">get_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get embeddings for a given text using the specified embedding model.</span>
 
-        Parameters
-        ----------
-        text : str
-            The input text for which embeddings are needed.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            The input text for which embeddings are needed.</span>
 
-        Returns
-        -------
-        List[float]
-            The embedding vector for the input text.
-        """
-        return self.embedding_model.embed_query(text)</code></pre>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[float]</span>
+<span class="sd">            The embedding vector for the input text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -277,7 +357,7 @@
 
 
 <h3 id="llamarch.common.llm_embedding.LLMEmbedding.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(model_category, embedding_model_name, api_key=None, model_parameters=None)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">model_category</span><span class="p">,</span> <span class="n">embedding_model_name</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -340,33 +420,60 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self,
-             model_category: str,
-             embedding_model_name: str,
-             api_key: Optional[str] = None,
-             model_parameters: Optional[Dict[str, Any]] = None):
-    """
-    Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">model_category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">embedding_model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">model_parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.</span>
 
-    Parameters
-    ----------
-    model_category : str
-        The name of the language model provider (e.g., 'openai', 'huggingface', 'cohere').
-    embedding_model_name : str
-        The name of the embedding model.
-    api_key : str, optional
-        The API key for the selected provider. Default is None.
-    model_parameters : dict, optional
-        Additional parameters for model configuration. Default is an empty dictionary if not provided.
-    """
-    self.model_category = model_category.lower()
-    self.embedding_model_name = embedding_model_name.lower(
-    ) if embedding_model_name else None
-    self.api_key = api_key
-    self.model_parameters = model_parameters or {}
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model_category : str</span>
+<span class="sd">        The name of the language model provider (e.g., &#39;openai&#39;, &#39;huggingface&#39;, &#39;cohere&#39;).</span>
+<span class="sd">    embedding_model_name : str</span>
+<span class="sd">        The name of the embedding model.</span>
+<span class="sd">    api_key : str, optional</span>
+<span class="sd">        The API key for the selected provider. Default is None.</span>
+<span class="sd">    model_parameters : dict, optional</span>
+<span class="sd">        Additional parameters for model configuration. Default is an empty dictionary if not provided.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model_category</span> <span class="o">=</span> <span class="n">model_category</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">embedding_model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span>
+    <span class="p">)</span> <span class="k">if</span> <span class="n">embedding_model_name</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model_parameters</span> <span class="o">=</span> <span class="n">model_parameters</span> <span class="ow">or</span> <span class="p">{}</span>
 
-    # Initialize the language model and embedding model
-    self.embedding_model = self._initialize_embeddings()</code></pre>
+    <span class="c1"># Initialize the language model and embedding model</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_embeddings</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -376,7 +483,7 @@
 
 
 <h3 id="llamarch.common.llm_embedding.LLMEmbedding.get_embeddings" class="doc doc-heading">
-            <code class="highlight language-python">get_embeddings(text)</code>
+            <code class="highlight language-python"><span class="n">get_embeddings</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
 
 </h3>
 
@@ -434,21 +541,36 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
-              <pre class="highlight"><code class="language-python">def get_embeddings(self, text: str) -&gt; List[float]:
-    """
-    Get embeddings for a given text using the specified embedding model.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get embeddings for a given text using the specified embedding model.</span>
 
-    Parameters
-    ----------
-    text : str
-        The input text for which embeddings are needed.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        The input text for which embeddings are needed.</span>
 
-    Returns
-    -------
-    List[float]
-        The embedding vector for the input text.
-    """
-    return self.embedding_model.embed_query(text)</code></pre>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    List[float]</span>
+<span class="sd">        The embedding vector for the input text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 

@@ -245,74 +245,142 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
-                <pre class="highlight"><code class="language-python">class StudentTeacher:
-    """
-    A class representing a system where a student and teacher interact, with the student generating 
-    responses and the teacher evaluating those responses. The teacher uses feedback to train the student.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">StudentTeacher</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a system where a student and teacher interact, with the student generating </span>
+<span class="sd">    responses and the teacher evaluating those responses. The teacher uses feedback to train the student.</span>
 
-    Attributes
-    ----------
-    student : Student
-        The student object, which uses a language model (LLM) to generate responses.
-    teacher : Teacher
-        The teacher object, which evaluates the student's responses.
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    student : Student</span>
+<span class="sd">        The student object, which uses a language model (LLM) to generate responses.</span>
+<span class="sd">    teacher : Teacher</span>
+<span class="sd">        The teacher object, which evaluates the student&#39;s responses.</span>
 
-    Methods
-    -------
-    generate_response(query)
-        Generates a response from both the student and teacher LLMs for a given query.
-    train_student(data)
-        Fine-tunes the student model using provided training data.
-    """
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    generate_response(query)</span>
+<span class="sd">        Generates a response from both the student and teacher LLMs for a given query.</span>
+<span class="sd">    train_student(data)</span>
+<span class="sd">        Fine-tunes the student model using provided training data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, student_llm, teacher_llm):
-        """
-        Initializes the StudentTeacher system with a student and teacher.
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the StudentTeacher system with a student and teacher.</span>
 
-        Parameters
-        ----------
-        student_llm : object
-            The language model (LLM) used by the student for generating responses.
-        teacher_llm : object
-            The language model (LLM) used by the teacher to evaluate student responses.
-        """
-        self.student = Student(student_llm)
-        self.teacher = Teacher(teacher_llm)
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        student_llm : object</span>
+<span class="sd">            The language model (LLM) used by the student for generating responses.</span>
+<span class="sd">        teacher_llm : object</span>
+<span class="sd">            The language model (LLM) used by the teacher to evaluate student responses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">student_llm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="n">teacher_llm</span><span class="p">)</span>
 
-    def generate_response(self, query):
-        """
-        Generates a response from both the student and teacher LLMs based on a query. 
-        The student generates a response which is then evaluated by the teacher.
+    <span class="k">def</span> <span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a response from both the student and teacher LLMs based on a query. </span>
+<span class="sd">        The student generates a response which is then evaluated by the teacher.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to be processed by the student and teacher.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to be processed by the student and teacher.</span>
 
-        Returns
-        -------
-        tuple
-            A tuple containing:
-            - student_response : str
-                The response generated by the student.
-            - teacher_response : str
-                The evaluation of the student response by the teacher.
-        """
-        student_response = self.student.generate_response(query)
-        teacher_response = self.teacher.evaluate_response(
-            student_response[:MAX_LENGTH])
-        return student_response, teacher_response
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing:</span>
+<span class="sd">            - student_response : str</span>
+<span class="sd">                The response generated by the student.</span>
+<span class="sd">            - teacher_response : str</span>
+<span class="sd">                The evaluation of the student response by the teacher.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">student_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">teacher_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">evaluate_response</span><span class="p">(</span>
+            <span class="n">student_response</span><span class="p">[:</span><span class="n">MAX_LENGTH</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">student_response</span><span class="p">,</span> <span class="n">teacher_response</span>
 
-    def train_student(self, data):
-        """
-        Fine-tunes the student model using the provided training data.
+    <span class="k">def</span> <span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fine-tunes the student model using the provided training data.</span>
 
-        Parameters
-        ----------
-        data : iterable
-            The data used for fine-tuning the student's model.
-        """
-        self.student.fine_tune(data)</code></pre>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : iterable</span>
+<span class="sd">            The data used for fine-tuning the student&#39;s model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -331,7 +399,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 
 
 <h3 id="llamarch.patterns.student_teacher.StudentTeacher.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(student_llm, teacher_llm)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">)</span></code>
 
 </h3>
 
@@ -374,19 +442,32 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self, student_llm, teacher_llm):
-    """
-    Initializes the StudentTeacher system with a student and teacher.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes the StudentTeacher system with a student and teacher.</span>
 
-    Parameters
-    ----------
-    student_llm : object
-        The language model (LLM) used by the student for generating responses.
-    teacher_llm : object
-        The language model (LLM) used by the teacher to evaluate student responses.
-    """
-    self.student = Student(student_llm)
-    self.teacher = Teacher(teacher_llm)</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    student_llm : object</span>
+<span class="sd">        The language model (LLM) used by the student for generating responses.</span>
+<span class="sd">    teacher_llm : object</span>
+<span class="sd">        The language model (LLM) used by the teacher to evaluate student responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">student_llm</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="n">teacher_llm</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -396,7 +477,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 
 
 <h3 id="llamarch.patterns.student_teacher.StudentTeacher.generate_response" class="doc doc-heading">
-            <code class="highlight language-python">generate_response(query)</code>
+            <code class="highlight language-python"><span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></code>
 
 </h3>
 
@@ -459,29 +540,52 @@ The student generates a response which is then evaluated by the teacher.</p>
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def generate_response(self, query):
-    """
-    Generates a response from both the student and teacher LLMs based on a query. 
-    The student generates a response which is then evaluated by the teacher.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a response from both the student and teacher LLMs based on a query. </span>
+<span class="sd">    The student generates a response which is then evaluated by the teacher.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to be processed by the student and teacher.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to be processed by the student and teacher.</span>
 
-    Returns
-    -------
-    tuple
-        A tuple containing:
-        - student_response : str
-            The response generated by the student.
-        - teacher_response : str
-            The evaluation of the student response by the teacher.
-    """
-    student_response = self.student.generate_response(query)
-    teacher_response = self.teacher.evaluate_response(
-        student_response[:MAX_LENGTH])
-    return student_response, teacher_response</code></pre>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing:</span>
+<span class="sd">        - student_response : str</span>
+<span class="sd">            The response generated by the student.</span>
+<span class="sd">        - teacher_response : str</span>
+<span class="sd">            The evaluation of the student response by the teacher.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">student_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">teacher_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">evaluate_response</span><span class="p">(</span>
+        <span class="n">student_response</span><span class="p">[:</span><span class="n">MAX_LENGTH</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">student_response</span><span class="p">,</span> <span class="n">teacher_response</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -491,7 +595,7 @@ The student generates a response which is then evaluated by the teacher.</p>
 
 
 <h3 id="llamarch.patterns.student_teacher.StudentTeacher.train_student" class="doc doc-heading">
-            <code class="highlight language-python">train_student(data)</code>
+            <code class="highlight language-python"><span class="n">train_student</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></code>
 
 </h3>
 
@@ -526,16 +630,26 @@ The student generates a response which is then evaluated by the teacher.</p>
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def train_student(self, data):
-    """
-    Fine-tunes the student model using the provided training data.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fine-tunes the student model using the provided training data.</span>
 
-    Parameters
-    ----------
-    data : iterable
-        The data used for fine-tuning the student's model.
-    """
-    self.student.fine_tune(data)</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : iterable</span>
+<span class="sd">        The data used for fine-tuning the student&#39;s model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">student</span><span class="o">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 

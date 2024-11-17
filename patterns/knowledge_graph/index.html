@@ -185,97 +185,188 @@
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-                <pre class="highlight"><code class="language-python">class KnowledgeLLM:
-    def __init__(self, knowledge_graph: GraphDB, llm: LLM):
-        """
-        Initialize the KnowledgeLLM with a knowledge graph and a language model.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">KnowledgeLLM</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the KnowledgeLLM with a knowledge graph and a language model.</span>
 
-        Parameters
-        ----------
-        knowledge_graph : GraphDB
-            The knowledge graph instance that will be used to store and retrieve knowledge.
-        llm : LLM
-            The language model instance that will be used to generate ontologies and respond to queries.
-        """
-        self.knowledge_graph = knowledge_graph
-        self.llm = llm
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        knowledge_graph : GraphDB</span>
+<span class="sd">            The knowledge graph instance that will be used to store and retrieve knowledge.</span>
+<span class="sd">        llm : LLM</span>
+<span class="sd">            The language model instance that will be used to generate ontologies and respond to queries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span> <span class="o">=</span> <span class="n">knowledge_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
 
-    def query_knowledge_graph(self, query):
-        """
-        Query the knowledge graph for relevant data.
+    <span class="k">def</span> <span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query the knowledge graph for relevant data.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to be executed on the knowledge graph.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to be executed on the knowledge graph.</span>
 
-        Returns
-        -------
-        Any
-            The result from the knowledge graph query.
-        """
-        return self.knowledge_graph.read_data(query)
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            The result from the knowledge graph query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-    def update_knowledge_graph(self, query, parameters=None):
-        """
-        Update the knowledge graph with new data.
+    <span class="k">def</span> <span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the knowledge graph with new data.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to modify the knowledge graph (e.g., adding or updating nodes).
-        parameters : dict, optional
-            Optional parameters for the query (default is None).
-        """
-        self.knowledge_graph.write_data(query, parameters)
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to modify the knowledge graph (e.g., adding or updating nodes).</span>
+<span class="sd">        parameters : dict, optional</span>
+<span class="sd">            Optional parameters for the query (default is None).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
 
-    def generate_ontology(self, text):
-        """
-        Generate an ontology from the provided text using the language model.
+    <span class="k">def</span> <span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate an ontology from the provided text using the language model.</span>
 
-        Parameters
-        ----------
-        text : str
-            The text from which the ontology will be generated.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            The text from which the ontology will be generated.</span>
 
-        Returns
-        -------
-        str
-            The generated ontology.
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The generated ontology.</span>
 
-        Notes
-        -----
-        The generated ontology will be inserted into the knowledge graph.
-        """
-        prompt = f"Generate an ontology from the following text: {text}"
-        ontology = self.llm.generate(prompt)
-        # Insert the generated ontology into the knowledge graph
-        self.update_knowledge_graph(
-            "CREATE (n:Ontology {data: $ontology})", {"ontology": ontology})
-        return ontology
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The generated ontology will be inserted into the knowledge graph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generate an ontology from the following text: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">ontology</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="c1"># Insert the generated ontology into the knowledge graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_knowledge_graph</span><span class="p">(</span>
+            <span class="s2">&quot;CREATE (n:Ontology {data: $ontology})&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;ontology&quot;</span><span class="p">:</span> <span class="n">ontology</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">ontology</span>
 
-    def respond_to_query(self, query):
-        """
-        Generate a response to a query by combining information from the knowledge graph and the language model.
+    <span class="k">def</span> <span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a response to a query by combining information from the knowledge graph and the language model.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to be answered using both the knowledge graph and language model.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to be answered using both the knowledge graph and language model.</span>
 
-        Returns
-        -------
-        str
-            The generated response to the query.
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The generated response to the query.</span>
 
-        Notes
-        -----
-        This method combines the results from a knowledge graph query with the language model's response.
-        """
-        graph_result = self.query_knowledge_graph(query)
-        prompt = f"Given this knowledge: {graph_result}, answer the following query: {query}"
-        print(prompt)
-        return self.llm(prompt)</code></pre>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method combines the results from a knowledge graph query with the language model&#39;s response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graph_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_knowledge_graph</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Given this knowledge: </span><span class="si">{</span><span class="n">graph_result</span><span class="si">}</span><span class="s2">, answer the following query: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -294,7 +385,7 @@
 
 
 <h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(knowledge_graph, llm)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">knowledge_graph</span><span class="p">,</span> <span class="n">llm</span><span class="p">)</span></code>
 
 </h3>
 
@@ -337,19 +428,32 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self, knowledge_graph: GraphDB, llm: LLM):
-    """
-    Initialize the KnowledgeLLM with a knowledge graph and a language model.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the KnowledgeLLM with a knowledge graph and a language model.</span>
 
-    Parameters
-    ----------
-    knowledge_graph : GraphDB
-        The knowledge graph instance that will be used to store and retrieve knowledge.
-    llm : LLM
-        The language model instance that will be used to generate ontologies and respond to queries.
-    """
-    self.knowledge_graph = knowledge_graph
-    self.llm = llm</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    knowledge_graph : GraphDB</span>
+<span class="sd">        The knowledge graph instance that will be used to store and retrieve knowledge.</span>
+<span class="sd">    llm : LLM</span>
+<span class="sd">        The language model instance that will be used to generate ontologies and respond to queries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span> <span class="o">=</span> <span class="n">knowledge_graph</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -359,7 +463,7 @@
 
 
 <h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.query_knowledge_graph" class="doc doc-heading">
-            <code class="highlight language-python">query_knowledge_graph(query)</code>
+            <code class="highlight language-python"><span class="n">query_knowledge_graph</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></code>
 
 </h3>
 
@@ -417,21 +521,36 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def query_knowledge_graph(self, query):
-    """
-    Query the knowledge graph for relevant data.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Query the knowledge graph for relevant data.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to be executed on the knowledge graph.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to be executed on the knowledge graph.</span>
 
-    Returns
-    -------
-    Any
-        The result from the knowledge graph query.
-    """
-    return self.knowledge_graph.read_data(query)</code></pre>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        The result from the knowledge graph query.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -441,7 +560,7 @@
 
 
 <h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.update_knowledge_graph" class="doc doc-heading">
-            <code class="highlight language-python">update_knowledge_graph(query, parameters=None)</code>
+            <code class="highlight language-python"><span class="n">update_knowledge_graph</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -486,18 +605,30 @@
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def update_knowledge_graph(self, query, parameters=None):
-    """
-    Update the knowledge graph with new data.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the knowledge graph with new data.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to modify the knowledge graph (e.g., adding or updating nodes).
-    parameters : dict, optional
-        Optional parameters for the query (default is None).
-    """
-    self.knowledge_graph.write_data(query, parameters)</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to modify the knowledge graph (e.g., adding or updating nodes).</span>
+<span class="sd">    parameters : dict, optional</span>
+<span class="sd">        Optional parameters for the query (default is None).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -507,7 +638,7 @@
 
 
 <h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.generate_ontology" class="doc doc-heading">
-            <code class="highlight language-python">generate_ontology(text)</code>
+            <code class="highlight language-python"><span class="n">generate_ontology</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
 
 </h3>
 
@@ -570,30 +701,54 @@
 </details>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def generate_ontology(self, text):
-    """
-    Generate an ontology from the provided text using the language model.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate an ontology from the provided text using the language model.</span>
 
-    Parameters
-    ----------
-    text : str
-        The text from which the ontology will be generated.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        The text from which the ontology will be generated.</span>
 
-    Returns
-    -------
-    str
-        The generated ontology.
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The generated ontology.</span>
 
-    Notes
-    -----
-    The generated ontology will be inserted into the knowledge graph.
-    """
-    prompt = f"Generate an ontology from the following text: {text}"
-    ontology = self.llm.generate(prompt)
-    # Insert the generated ontology into the knowledge graph
-    self.update_knowledge_graph(
-        "CREATE (n:Ontology {data: $ontology})", {"ontology": ontology})
-    return ontology</code></pre>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The generated ontology will be inserted into the knowledge graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generate an ontology from the following text: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">ontology</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="c1"># Insert the generated ontology into the knowledge graph</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_knowledge_graph</span><span class="p">(</span>
+        <span class="s2">&quot;CREATE (n:Ontology {data: $ontology})&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;ontology&quot;</span><span class="p">:</span> <span class="n">ontology</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">ontology</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -603,7 +758,7 @@
 
 
 <h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.respond_to_query" class="doc doc-heading">
-            <code class="highlight language-python">respond_to_query(query)</code>
+            <code class="highlight language-python"><span class="n">respond_to_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></code>
 
 </h3>
 
@@ -666,28 +821,50 @@
 </details>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def respond_to_query(self, query):
-    """
-    Generate a response to a query by combining information from the knowledge graph and the language model.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a response to a query by combining information from the knowledge graph and the language model.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to be answered using both the knowledge graph and language model.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to be answered using both the knowledge graph and language model.</span>
 
-    Returns
-    -------
-    str
-        The generated response to the query.
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The generated response to the query.</span>
 
-    Notes
-    -----
-    This method combines the results from a knowledge graph query with the language model's response.
-    """
-    graph_result = self.query_knowledge_graph(query)
-    prompt = f"Given this knowledge: {graph_result}, answer the following query: {query}"
-    print(prompt)
-    return self.llm(prompt)</code></pre>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This method combines the results from a knowledge graph query with the language model&#39;s response.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_knowledge_graph</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Given this knowledge: </span><span class="si">{</span><span class="n">graph_result</span><span class="si">}</span><span class="s2">, answer the following query: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 

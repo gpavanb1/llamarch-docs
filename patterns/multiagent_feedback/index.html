@@ -230,71 +230,136 @@ gathering their responses, integrating the outputs, and collecting feedback to a
 
               <details class="quote">
                 <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
-                <pre class="highlight"><code class="language-python">class MultiAgentModel:
-    """
-    A class representing a multi-agent model that processes queries by selecting agents,
-    gathering their responses, integrating the outputs, and collecting feedback to adjust rules.
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MultiAgentModel</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a multi-agent model that processes queries by selecting agents,</span>
+<span class="sd">    gathering their responses, integrating the outputs, and collecting feedback to adjust rules.</span>
 
-    Attributes
-    ----------
-    agent_list : list
-        A list of agent objects used in the multi-agent system.
-    selector : AgentSelector
-        An object responsible for selecting agents based on the query.
-    integrator : OutputIntegrator
-        An object responsible for integrating the responses from selected agents.
-    feedback_mechanism : FeedbackMechanism
-        An object used to collect feedback and adjust agent behavior.
-    """
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    agent_list : list</span>
+<span class="sd">        A list of agent objects used in the multi-agent system.</span>
+<span class="sd">    selector : AgentSelector</span>
+<span class="sd">        An object responsible for selecting agents based on the query.</span>
+<span class="sd">    integrator : OutputIntegrator</span>
+<span class="sd">        An object responsible for integrating the responses from selected agents.</span>
+<span class="sd">    feedback_mechanism : FeedbackMechanism</span>
+<span class="sd">        An object used to collect feedback and adjust agent behavior.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, agent_list):
-        """
-        Initialize components of the multi-agent model.
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize components of the multi-agent model.</span>
 
-        Parameters
-        ----------
-        agent_list : list
-            A list of agent objects to be used in the model.
-        """
-        # Instantiate agents
-        self.agent_list = agent_list
-        self.selector = AgentSelector(self.agent_list)
-        self.integrator = OutputIntegrator()
-        self.feedback_mechanism = FeedbackMechanism()
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        agent_list : list</span>
+<span class="sd">            A list of agent objects to be used in the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Instantiate agents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span> <span class="o">=</span> <span class="n">agent_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selector</span> <span class="o">=</span> <span class="n">AgentSelector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integrator</span> <span class="o">=</span> <span class="n">OutputIntegrator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span> <span class="o">=</span> <span class="n">FeedbackMechanism</span><span class="p">()</span>
 
-    async def _gather_responses(self, agent_list, query):
-        return await asyncio.gather(*(a.generate_response(query) for a in agent_list))
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_gather_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">agent_list</span><span class="p">))</span>
 
-    def process_query(self, query):
-        """
-        Process a query through the multi-agent system by selecting agents,
-        gathering their responses, integrating the outputs, and collecting feedback.
+    <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process a query through the multi-agent system by selecting agents,</span>
+<span class="sd">        gathering their responses, integrating the outputs, and collecting feedback.</span>
 
-        Parameters
-        ----------
-        query : str
-            The query to be processed by the multi-agent system.
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            The query to be processed by the multi-agent system.</span>
 
-        Returns
-        -------
-        str
-            The unified output generated by integrating the responses from the selected agents.
-        """
-        # Step 1: Select agents based on the query
-        selected_agents = self.selector.select_agents(query)
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The unified output generated by integrating the responses from the selected agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Step 1: Select agents based on the query</span>
+        <span class="n">selected_agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="o">.</span><span class="n">select_agents</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-        # Step 2: Each selected agent generates an output
-        responses = asyncio.run(self._gather_responses(selected_agents, query))
+        <span class="c1"># Step 2: Each selected agent generates an output</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gather_responses</span><span class="p">(</span><span class="n">selected_agents</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
 
-        # Step 3: Integrate outputs from all agents
-        unified_output = self.integrator.integrate_outputs(responses)
+        <span class="c1"># Step 3: Integrate outputs from all agents</span>
+        <span class="n">unified_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="o">.</span><span class="n">integrate_outputs</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
 
-        # Step 4: Collect feedback and adjust rules as needed
-        feedback = f"Feedback for query '{query}': output quality needs improvement."
-        self.feedback_mechanism.collect_feedback(feedback)
-        self.feedback_mechanism.adjust_rules()
+        <span class="c1"># Step 4: Collect feedback and adjust rules as needed</span>
+        <span class="n">feedback</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Feedback for query &#39;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&#39;: output quality needs improvement.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span><span class="o">.</span><span class="n">collect_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span><span class="o">.</span><span class="n">adjust_rules</span><span class="p">()</span>
 
-        return unified_output</code></pre>
+        <span class="k">return</span> <span class="n">unified_output</span>
+</code></pre></div></td></tr></table></div>
               </details>
 
 
@@ -313,7 +378,7 @@ gathering their responses, integrating the outputs, and collecting feedback to a
 
 
 <h3 id="llamarch.patterns.multiagent_feedback.MultiAgentModel.__init__" class="doc doc-heading">
-            <code class="highlight language-python">__init__(agent_list)</code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">agent_list</span><span class="p">)</span></code>
 
 </h3>
 
@@ -348,20 +413,34 @@ gathering their responses, integrating the outputs, and collecting feedback to a
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def __init__(self, agent_list):
-    """
-    Initialize components of the multi-agent model.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize components of the multi-agent model.</span>
 
-    Parameters
-    ----------
-    agent_list : list
-        A list of agent objects to be used in the model.
-    """
-    # Instantiate agents
-    self.agent_list = agent_list
-    self.selector = AgentSelector(self.agent_list)
-    self.integrator = OutputIntegrator()
-    self.feedback_mechanism = FeedbackMechanism()</code></pre>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    agent_list : list</span>
+<span class="sd">        A list of agent objects to be used in the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Instantiate agents</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span> <span class="o">=</span> <span class="n">agent_list</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selector</span> <span class="o">=</span> <span class="n">AgentSelector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_list</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">integrator</span> <span class="o">=</span> <span class="n">OutputIntegrator</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span> <span class="o">=</span> <span class="n">FeedbackMechanism</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
@@ -371,7 +450,7 @@ gathering their responses, integrating the outputs, and collecting feedback to a
 
 
 <h3 id="llamarch.patterns.multiagent_feedback.MultiAgentModel.process_query" class="doc doc-heading">
-            <code class="highlight language-python">process_query(query)</code>
+            <code class="highlight language-python"><span class="n">process_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></code>
 
 </h3>
 
@@ -430,36 +509,66 @@ gathering their responses, integrating the outputs, and collecting feedback.</p>
 </table>
             <details class="quote">
               <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
-              <pre class="highlight"><code class="language-python">def process_query(self, query):
-    """
-    Process a query through the multi-agent system by selecting agents,
-    gathering their responses, integrating the outputs, and collecting feedback.
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Process a query through the multi-agent system by selecting agents,</span>
+<span class="sd">    gathering their responses, integrating the outputs, and collecting feedback.</span>
 
-    Parameters
-    ----------
-    query : str
-        The query to be processed by the multi-agent system.
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str</span>
+<span class="sd">        The query to be processed by the multi-agent system.</span>
 
-    Returns
-    -------
-    str
-        The unified output generated by integrating the responses from the selected agents.
-    """
-    # Step 1: Select agents based on the query
-    selected_agents = self.selector.select_agents(query)
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The unified output generated by integrating the responses from the selected agents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Step 1: Select agents based on the query</span>
+    <span class="n">selected_agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="o">.</span><span class="n">select_agents</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-    # Step 2: Each selected agent generates an output
-    responses = asyncio.run(self._gather_responses(selected_agents, query))
+    <span class="c1"># Step 2: Each selected agent generates an output</span>
+    <span class="n">responses</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gather_responses</span><span class="p">(</span><span class="n">selected_agents</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
 
-    # Step 3: Integrate outputs from all agents
-    unified_output = self.integrator.integrate_outputs(responses)
+    <span class="c1"># Step 3: Integrate outputs from all agents</span>
+    <span class="n">unified_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="o">.</span><span class="n">integrate_outputs</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
 
-    # Step 4: Collect feedback and adjust rules as needed
-    feedback = f"Feedback for query '{query}': output quality needs improvement."
-    self.feedback_mechanism.collect_feedback(feedback)
-    self.feedback_mechanism.adjust_rules()
+    <span class="c1"># Step 4: Collect feedback and adjust rules as needed</span>
+    <span class="n">feedback</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Feedback for query &#39;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&#39;: output quality needs improvement.&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span><span class="o">.</span><span class="n">collect_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">feedback_mechanism</span><span class="o">.</span><span class="n">adjust_rules</span><span class="p">()</span>
 
-    return unified_output</code></pre>
+    <span class="k">return</span> <span class="n">unified_output</span>
+</code></pre></div></td></tr></table></div>
             </details>
     </div>
 
