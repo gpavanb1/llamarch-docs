@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Multi-Agent Feedback - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Multi-Agent Feedback";
+        var mkdocs_page_input_path = "patterns/multiagent_feedback.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common Components</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Patterns</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Multi-Agent Feedback</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.multiagent_feedback">multiagent_feedback</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.multiagent_feedback.MultiAgentModel">MultiAgentModel</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.multiagent_feedback.MultiAgentModel.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.multiagent_feedback.MultiAgentModel.process_query">process_query</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Patterns</li>
+      <li class="breadcrumb-item active">Multi-Agent Feedback</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="multi-agent-feedback">Multi-Agent Feedback</h1>
+<p><img alt="img" src="../../images/patterns/multiagent_feedback.jpg" /></p>
+<p>The <code>MultiAgentFeedback</code> class is a component in the <code>llamarch</code> library that provides an interface to work with multi-agent feedback patterns, which involve the use of multiple agents to improve the performance of LLMs.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.patterns.multiagent_feedback"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.patterns.multiagent_feedback.MultiAgentModel" class="doc doc-heading">
+            <code>MultiAgentModel</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A class representing a multi-agent model that processes queries by selecting agents,
+gathering their responses, integrating the outputs, and collecting feedback to adjust rules.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>agent_list</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of agent objects used in the multi-agent system.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selector</code></b>
+                  (<code><span title="llamarch.patterns.multiagent_feedback.agent_selector.AgentSelector">AgentSelector</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>An object responsible for selecting agents based on the query.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>integrator</code></b>
+                  (<code><span title="llamarch.patterns.multiagent_feedback.output_integrator.OutputIntegrator">OutputIntegrator</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>An object responsible for integrating the responses from selected agents.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>feedback_mechanism</code></b>
+                  (<code><span title="llamarch.patterns.multiagent_feedback.feedback.FeedbackMechanism">FeedbackMechanism</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>An object used to collect feedback and adjust agent behavior.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
+                <pre class="highlight"><code class="language-python">class MultiAgentModel:
+    """
+    A class representing a multi-agent model that processes queries by selecting agents,
+    gathering their responses, integrating the outputs, and collecting feedback to adjust rules.
+
+    Attributes
+    ----------
+    agent_list : list
+        A list of agent objects used in the multi-agent system.
+    selector : AgentSelector
+        An object responsible for selecting agents based on the query.
+    integrator : OutputIntegrator
+        An object responsible for integrating the responses from selected agents.
+    feedback_mechanism : FeedbackMechanism
+        An object used to collect feedback and adjust agent behavior.
+    """
+
+    def __init__(self, agent_list):
+        """
+        Initialize components of the multi-agent model.
+
+        Parameters
+        ----------
+        agent_list : list
+            A list of agent objects to be used in the model.
+        """
+        # Instantiate agents
+        self.agent_list = agent_list
+        self.selector = AgentSelector(self.agent_list)
+        self.integrator = OutputIntegrator()
+        self.feedback_mechanism = FeedbackMechanism()
+
+    async def _gather_responses(self, agent_list, query):
+        return await asyncio.gather(*(a.generate_response(query) for a in agent_list))
+
+    def process_query(self, query):
+        """
+        Process a query through the multi-agent system by selecting agents,
+        gathering their responses, integrating the outputs, and collecting feedback.
+
+        Parameters
+        ----------
+        query : str
+            The query to be processed by the multi-agent system.
+
+        Returns
+        -------
+        str
+            The unified output generated by integrating the responses from the selected agents.
+        """
+        # Step 1: Select agents based on the query
+        selected_agents = self.selector.select_agents(query)
+
+        # Step 2: Each selected agent generates an output
+        responses = asyncio.run(self._gather_responses(selected_agents, query))
+
+        # Step 3: Integrate outputs from all agents
+        unified_output = self.integrator.integrate_outputs(responses)
+
+        # Step 4: Collect feedback and adjust rules as needed
+        feedback = f"Feedback for query '{query}': output quality needs improvement."
+        self.feedback_mechanism.collect_feedback(feedback)
+        self.feedback_mechanism.adjust_rules()
+
+        return unified_output</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.multiagent_feedback.MultiAgentModel.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(agent_list)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize components of the multi-agent model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>agent_list</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of agent objects to be used in the model.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, agent_list):
+    """
+    Initialize components of the multi-agent model.
+
+    Parameters
+    ----------
+    agent_list : list
+        A list of agent objects to be used in the model.
+    """
+    # Instantiate agents
+    self.agent_list = agent_list
+    self.selector = AgentSelector(self.agent_list)
+    self.integrator = OutputIntegrator()
+    self.feedback_mechanism = FeedbackMechanism()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.multiagent_feedback.MultiAgentModel.process_query" class="doc doc-heading">
+            <code class="highlight language-python">process_query(query)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Process a query through the multi-agent system by selecting agents,
+gathering their responses, integrating the outputs, and collecting feedback.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query to be processed by the multi-agent system.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>str</code>
+              –
+              <div class="doc-md-description">
+                <p>The unified output generated by integrating the responses from the selected agents.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/multiagent_feedback/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def process_query(self, query):
+    """
+    Process a query through the multi-agent system by selecting agents,
+    gathering their responses, integrating the outputs, and collecting feedback.
+
+    Parameters
+    ----------
+    query : str
+        The query to be processed by the multi-agent system.
+
+    Returns
+    -------
+    str
+        The unified output generated by integrating the responses from the selected agents.
+    """
+    # Step 1: Select agents based on the query
+    selected_agents = self.selector.select_agents(query)
+
+    # Step 2: Each selected agent generates an output
+    responses = asyncio.run(self._gather_responses(selected_agents, query))
+
+    # Step 3: Integrate outputs from all agents
+    unified_output = self.integrator.integrate_outputs(responses)
+
+    # Step 4: Collect feedback and adjust rules as needed
+    feedback = f"Feedback for query '{query}': output quality needs improvement."
+    self.feedback_mechanism.collect_feedback(feedback)
+    self.feedback_mechanism.adjust_rules()
+
+    return unified_output</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../memory_cognition/" class="btn btn-neutral float-left" title="Memory Cognition"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../student_teacher/" class="btn btn-neutral float-right" title="Student-Teacher">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../memory_cognition/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../student_teacher/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

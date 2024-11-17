@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Memory Cognition - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Memory Cognition";
+        var mkdocs_page_input_path = "patterns/memory_cognition.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common Components</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Patterns</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Memory Cognition</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.memory_cognition">memory_cognition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition">MemoryCognition</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.store_information">store_information</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.fetch_similar">fetch_similar</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.summarize">summarize</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.evaluate">evaluate</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.flush_to_long_term">flush_to_long_term</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.memory_cognition.MemoryCognition.fetch_similar_from_long_term">fetch_similar_from_long_term</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Patterns</li>
+      <li class="breadcrumb-item active">Memory Cognition</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="memory-cognition">Memory Cognition</h1>
+<p><img alt="img" src="../../images/patterns/memory_cognition.jpg" /></p>
+<p>The <code>MemoryCognition</code> class is a component in the <code>llamarch</code> library that provides an interface to work with memory cognition patterns, which involve the use of memory to improve the performance of LLMs.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.patterns.memory_cognition"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.patterns.memory_cognition.MemoryCognition" class="doc doc-heading">
+            <code>MemoryCognition</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A class to handle memory processing, including storing, retrieving, summarizing, 
+and evaluating information from short-term and long-term memory.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>llm</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The large language model used for processing.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The embedding used for representing queries.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>short_term_memory</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The short-term memory system for storing and retrieving data.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>long_term_memory</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The long-term memory system for storing and retrieving data.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>summarizer</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The summarizer used to summarize similar items from memory.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_decay</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The system used to evaluate memory decay.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>logger</code></b>
+                  (<code><span title="logging.Logger">Logger</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Logger for the MemoryCognition class.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+                <pre class="highlight"><code class="language-python">class MemoryCognition:
+    """
+    A class to handle memory processing, including storing, retrieving, summarizing, 
+    and evaluating information from short-term and long-term memory.
+
+    Attributes
+    ----------
+    llm : object
+        The large language model used for processing.
+    embedding : object
+        The embedding used for representing queries.
+    short_term_memory : object
+        The short-term memory system for storing and retrieving data.
+    long_term_memory : object
+        The long-term memory system for storing and retrieving data.
+    summarizer : object
+        The summarizer used to summarize similar items from memory.
+    memory_decay : object
+        The system used to evaluate memory decay.
+    logger : logging.Logger
+        Logger for the MemoryCognition class.
+    """
+
+    def __init__(self, llm, embedding, short_term_memory, long_term_memory, summarizer, memory_decay):
+        """
+        Initializes the MemoryCognition instance with the provided components.
+
+        Parameters
+        ----------
+        llm : object
+            The large language model used for processing.
+        embedding : object
+            The embedding used for representing queries.
+        short_term_memory : object
+            The short-term memory system for storing and retrieving data.
+        long_term_memory : object
+            The long-term memory system for storing and retrieving data.
+        summarizer : object
+            The summarizer used to summarize similar items from memory.
+        memory_decay : object
+            The system used to evaluate memory decay.
+        """
+        self.llm = llm
+        self.embedding = embedding
+        self.short_term_memory = short_term_memory
+        self.long_term_memory = long_term_memory
+        self.summarizer = summarizer
+        self.memory_decay = memory_decay
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("MemoryCognition initialized.")
+
+    def store_information(self, query, query_vector):
+        """
+        Store information in short-term memory.
+
+        Parameters
+        ----------
+        query : str
+            The query text to be stored in memory.
+        query_vector : numpy.ndarray
+            The vector representation of the query to be stored in memory.
+        """
+        self.short_term_memory.store_information(query_vector, query)
+        self.logger.info(f"Information stored in Short-Term Memory: {query}")
+
+    def fetch_similar(self, query_vector):
+        """
+        Fetch similar items from short-term memory based on the query vector.
+
+        Parameters
+        ----------
+        query_vector : numpy.ndarray
+            The vector representation of the query to search for similar items.
+
+        Returns
+        -------
+        list
+            A list of similar items found in short-term memory.
+        """
+        similar_items_stm = self.short_term_memory.fetch_similar(query_vector)
+        self.logger.info(
+            f"Similar items in Short-Term Memory: {[getattr(x, 'metadata', {}).get('query') for x in similar_items_stm]}")
+        return similar_items_stm
+
+    def summarize(self, similar_items_stm):
+        """
+        Summarize the similar items fetched from short-term memory.
+
+        Parameters
+        ----------
+        similar_items_stm : list
+            A list of similar items from short-term memory to be summarized.
+
+        Returns
+        -------
+        str
+            A summary of the similar items.
+        """
+        summary = self.summarizer.summarize(similar_items_stm)
+        self.logger.info(f"Summary of similar items: {summary}")
+        return summary
+
+    def evaluate(self, summary):
+        """
+        Evaluate the summary based on memory decay.
+
+        Parameters
+        ----------
+        summary : str
+            The summary of similar items to be evaluated.
+
+        Returns
+        -------
+        float
+            The evaluation result based on memory decay.
+        """
+        evaluation = self.memory_decay.evaluate(summary)
+        self.logger.info(f"Evaluation: {evaluation}")
+        return evaluation
+
+    def flush_to_long_term(self, long_term_memory):
+        """
+        Flush the short-term memory content to long-term memory.
+
+        Parameters
+        ----------
+        long_term_memory : object
+            The long-term memory system to store the flushed data.
+        """
+        self.short_term_memory.flush_to_long_term(long_term_memory)
+        self.logger.info("Summary flushed to Long-Term Memory.")
+
+    def fetch_similar_from_long_term(self, query_vector):
+        """
+        Fetch similar items from long-term memory based on the query vector.
+
+        Parameters
+        ----------
+        query_vector : numpy.ndarray
+            The vector representation of the query to search for similar items.
+
+        Returns
+        -------
+        list
+            A list of similar items found in long-term memory.
+        """
+        long_term_results = self.long_term_memory.fetch_similar(query_vector)
+        self.logger.info(
+            f"Similar items in Long-Term Memory: {long_term_results}")</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(llm, embedding, short_term_memory, long_term_memory, summarizer, memory_decay)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the MemoryCognition instance with the provided components.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>llm</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The large language model used for processing.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The embedding used for representing queries.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>short_term_memory</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The short-term memory system for storing and retrieving data.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>long_term_memory</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The long-term memory system for storing and retrieving data.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>summarizer</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The summarizer used to summarize similar items from memory.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_decay</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The system used to evaluate memory decay.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, llm, embedding, short_term_memory, long_term_memory, summarizer, memory_decay):
+    """
+    Initializes the MemoryCognition instance with the provided components.
+
+    Parameters
+    ----------
+    llm : object
+        The large language model used for processing.
+    embedding : object
+        The embedding used for representing queries.
+    short_term_memory : object
+        The short-term memory system for storing and retrieving data.
+    long_term_memory : object
+        The long-term memory system for storing and retrieving data.
+    summarizer : object
+        The summarizer used to summarize similar items from memory.
+    memory_decay : object
+        The system used to evaluate memory decay.
+    """
+    self.llm = llm
+    self.embedding = embedding
+    self.short_term_memory = short_term_memory
+    self.long_term_memory = long_term_memory
+    self.summarizer = summarizer
+    self.memory_decay = memory_decay
+    self.logger = logging.getLogger(__name__)
+    self.logger.info("MemoryCognition initialized.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.store_information" class="doc doc-heading">
+            <code class="highlight language-python">store_information(query, query_vector)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Store information in short-term memory.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query text to be stored in memory.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>query_vector</code></b>
+                  (<code><span title="numpy.ndarray">ndarray</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The vector representation of the query to be stored in memory.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def store_information(self, query, query_vector):
+    """
+    Store information in short-term memory.
+
+    Parameters
+    ----------
+    query : str
+        The query text to be stored in memory.
+    query_vector : numpy.ndarray
+        The vector representation of the query to be stored in memory.
+    """
+    self.short_term_memory.store_information(query_vector, query)
+    self.logger.info(f"Information stored in Short-Term Memory: {query}")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.fetch_similar" class="doc doc-heading">
+            <code class="highlight language-python">fetch_similar(query_vector)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fetch similar items from short-term memory based on the query vector.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query_vector</code></b>
+                  (<code><span title="numpy.ndarray">ndarray</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The vector representation of the query to search for similar items.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>list</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of similar items found in short-term memory.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fetch_similar(self, query_vector):
+    """
+    Fetch similar items from short-term memory based on the query vector.
+
+    Parameters
+    ----------
+    query_vector : numpy.ndarray
+        The vector representation of the query to search for similar items.
+
+    Returns
+    -------
+    list
+        A list of similar items found in short-term memory.
+    """
+    similar_items_stm = self.short_term_memory.fetch_similar(query_vector)
+    self.logger.info(
+        f"Similar items in Short-Term Memory: {[getattr(x, 'metadata', {}).get('query') for x in similar_items_stm]}")
+    return similar_items_stm</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.summarize" class="doc doc-heading">
+            <code class="highlight language-python">summarize(similar_items_stm)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Summarize the similar items fetched from short-term memory.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>similar_items_stm</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of similar items from short-term memory to be summarized.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>str</code>
+              –
+              <div class="doc-md-description">
+                <p>A summary of the similar items.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def summarize(self, similar_items_stm):
+    """
+    Summarize the similar items fetched from short-term memory.
+
+    Parameters
+    ----------
+    similar_items_stm : list
+        A list of similar items from short-term memory to be summarized.
+
+    Returns
+    -------
+    str
+        A summary of the similar items.
+    """
+    summary = self.summarizer.summarize(similar_items_stm)
+    self.logger.info(f"Summary of similar items: {summary}")
+    return summary</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.evaluate" class="doc doc-heading">
+            <code class="highlight language-python">evaluate(summary)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Evaluate the summary based on memory decay.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>summary</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The summary of similar items to be evaluated.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>float</code>
+              –
+              <div class="doc-md-description">
+                <p>The evaluation result based on memory decay.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def evaluate(self, summary):
+    """
+    Evaluate the summary based on memory decay.
+
+    Parameters
+    ----------
+    summary : str
+        The summary of similar items to be evaluated.
+
+    Returns
+    -------
+    float
+        The evaluation result based on memory decay.
+    """
+    evaluation = self.memory_decay.evaluate(summary)
+    self.logger.info(f"Evaluation: {evaluation}")
+    return evaluation</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.flush_to_long_term" class="doc doc-heading">
+            <code class="highlight language-python">flush_to_long_term(long_term_memory)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Flush the short-term memory content to long-term memory.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>long_term_memory</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The long-term memory system to store the flushed data.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def flush_to_long_term(self, long_term_memory):
+    """
+    Flush the short-term memory content to long-term memory.
+
+    Parameters
+    ----------
+    long_term_memory : object
+        The long-term memory system to store the flushed data.
+    """
+    self.short_term_memory.flush_to_long_term(long_term_memory)
+    self.logger.info("Summary flushed to Long-Term Memory.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.memory_cognition.MemoryCognition.fetch_similar_from_long_term" class="doc doc-heading">
+            <code class="highlight language-python">fetch_similar_from_long_term(query_vector)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fetch similar items from long-term memory based on the query vector.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query_vector</code></b>
+                  (<code><span title="numpy.ndarray">ndarray</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The vector representation of the query to search for similar items.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>list</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of similar items found in long-term memory.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/memory_cognition/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fetch_similar_from_long_term(self, query_vector):
+    """
+    Fetch similar items from long-term memory based on the query vector.
+
+    Parameters
+    ----------
+    query_vector : numpy.ndarray
+        The vector representation of the query to search for similar items.
+
+    Returns
+    -------
+    list
+        A list of similar items found in long-term memory.
+    """
+    long_term_results = self.long_term_memory.fetch_similar(query_vector)
+    self.logger.info(
+        f"Similar items in Long-Term Memory: {long_term_results}")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../layered_caching/" class="btn btn-neutral float-left" title="Layered Caching"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../multiagent_feedback/" class="btn btn-neutral float-right" title="Multi-Agent Feedback">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../layered_caching/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../multiagent_feedback/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

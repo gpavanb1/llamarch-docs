@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Student-Teacher - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Student-Teacher";
+        var mkdocs_page_input_path = "patterns/student_teacher.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common Components</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Patterns</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Student-Teacher</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.student_teacher">student_teacher</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.student_teacher.StudentTeacher">StudentTeacher</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.student_teacher.StudentTeacher.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.student_teacher.StudentTeacher.generate_response">generate_response</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.student_teacher.StudentTeacher.train_student">train_student</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Patterns</li>
+      <li class="breadcrumb-item active">Student-Teacher</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="student-teacher">Student-Teacher</h1>
+<p><img alt="img" src="../../images/patterns/student_teacher.jpg" /></p>
+<p>The <code>StudentTeacher</code> class can be used to train a student model using a teacher model, that is preferably an expert in a narrow domain. The student model is trained to generate responses that are evaluated by the teacher model.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.patterns.student_teacher"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.patterns.student_teacher.StudentTeacher" class="doc doc-heading">
+            <code>StudentTeacher</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A class representing a system where a student and teacher interact, with the student generating 
+responses and the teacher evaluating those responses. The teacher uses feedback to train the student.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>student</code></b>
+                  (<code><span title="llamarch.patterns.student_teacher.student.Student">Student</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The student object, which uses a language model (LLM) to generate responses.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>teacher</code></b>
+                  (<code><span title="llamarch.patterns.student_teacher.teacher.Teacher">Teacher</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The teacher object, which evaluates the student's responses.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="llamarch.patterns.student_teacher.StudentTeacher.generate_response" href="#llamarch.patterns.student_teacher.StudentTeacher.generate_response">generate_response</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Generates a response from both the student and teacher LLMs for a given query.</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="llamarch.patterns.student_teacher.StudentTeacher.train_student" href="#llamarch.patterns.student_teacher.StudentTeacher.train_student">train_student</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Fine-tunes the student model using provided training data.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
+                <pre class="highlight"><code class="language-python">class StudentTeacher:
+    """
+    A class representing a system where a student and teacher interact, with the student generating 
+    responses and the teacher evaluating those responses. The teacher uses feedback to train the student.
+
+    Attributes
+    ----------
+    student : Student
+        The student object, which uses a language model (LLM) to generate responses.
+    teacher : Teacher
+        The teacher object, which evaluates the student's responses.
+
+    Methods
+    -------
+    generate_response(query)
+        Generates a response from both the student and teacher LLMs for a given query.
+    train_student(data)
+        Fine-tunes the student model using provided training data.
+    """
+
+    def __init__(self, student_llm, teacher_llm):
+        """
+        Initializes the StudentTeacher system with a student and teacher.
+
+        Parameters
+        ----------
+        student_llm : object
+            The language model (LLM) used by the student for generating responses.
+        teacher_llm : object
+            The language model (LLM) used by the teacher to evaluate student responses.
+        """
+        self.student = Student(student_llm)
+        self.teacher = Teacher(teacher_llm)
+
+    def generate_response(self, query):
+        """
+        Generates a response from both the student and teacher LLMs based on a query. 
+        The student generates a response which is then evaluated by the teacher.
+
+        Parameters
+        ----------
+        query : str
+            The query to be processed by the student and teacher.
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+            - student_response : str
+                The response generated by the student.
+            - teacher_response : str
+                The evaluation of the student response by the teacher.
+        """
+        student_response = self.student.generate_response(query)
+        teacher_response = self.teacher.evaluate_response(
+            student_response[:MAX_LENGTH])
+        return student_response, teacher_response
+
+    def train_student(self, data):
+        """
+        Fine-tunes the student model using the provided training data.
+
+        Parameters
+        ----------
+        data : iterable
+            The data used for fine-tuning the student's model.
+        """
+        self.student.fine_tune(data)</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.student_teacher.StudentTeacher.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(student_llm, teacher_llm)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the StudentTeacher system with a student and teacher.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>student_llm</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The language model (LLM) used by the student for generating responses.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>teacher_llm</code></b>
+                  (<code>object</code>)
+              –
+              <div class="doc-md-description">
+                <p>The language model (LLM) used by the teacher to evaluate student responses.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, student_llm, teacher_llm):
+    """
+    Initializes the StudentTeacher system with a student and teacher.
+
+    Parameters
+    ----------
+    student_llm : object
+        The language model (LLM) used by the student for generating responses.
+    teacher_llm : object
+        The language model (LLM) used by the teacher to evaluate student responses.
+    """
+    self.student = Student(student_llm)
+    self.teacher = Teacher(teacher_llm)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.student_teacher.StudentTeacher.generate_response" class="doc doc-heading">
+            <code class="highlight language-python">generate_response(query)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generates a response from both the student and teacher LLMs based on a query. 
+The student generates a response which is then evaluated by the teacher.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query to be processed by the student and teacher.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>tuple</code>
+              –
+              <div class="doc-md-description">
+                <p>A tuple containing:
+- student_response : str
+    The response generated by the student.
+- teacher_response : str
+    The evaluation of the student response by the teacher.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate_response(self, query):
+    """
+    Generates a response from both the student and teacher LLMs based on a query. 
+    The student generates a response which is then evaluated by the teacher.
+
+    Parameters
+    ----------
+    query : str
+        The query to be processed by the student and teacher.
+
+    Returns
+    -------
+    tuple
+        A tuple containing:
+        - student_response : str
+            The response generated by the student.
+        - teacher_response : str
+            The evaluation of the student response by the teacher.
+    """
+    student_response = self.student.generate_response(query)
+    teacher_response = self.teacher.evaluate_response(
+        student_response[:MAX_LENGTH])
+    return student_response, teacher_response</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.student_teacher.StudentTeacher.train_student" class="doc doc-heading">
+            <code class="highlight language-python">train_student(data)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fine-tunes the student model using the provided training data.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>data</code></b>
+                  (<code>iterable</code>)
+              –
+              <div class="doc-md-description">
+                <p>The data used for fine-tuning the student's model.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def train_student(self, data):
+    """
+    Fine-tunes the student model using the provided training data.
+
+    Parameters
+    ----------
+    data : iterable
+        The data used for fine-tuning the student's model.
+    """
+    self.student.fine_tune(data)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../multiagent_feedback/" class="btn btn-neutral float-left" title="Multi-Agent Feedback"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../tutorials/memory_chatbot/" class="btn btn-neutral float-right" title="Memory Chatbot">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../multiagent_feedback/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../tutorials/memory_chatbot/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

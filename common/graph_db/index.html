@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>GraphDB - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GraphDB";
+        var mkdocs_page_input_path = "common/graph_db.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common Components</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">GraphDB</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.graph_db">graph_db</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB">GraphDB</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.close">close</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.write_data">write_data</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.read_data">read_data</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Patterns</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Common Components</li>
+      <li class="breadcrumb-item active">GraphDB</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="graphdb">GraphDB</h1>
+<p>The <code>GraphDB</code> class is a component in the <code>llamarch</code> library that provides a simple interface to work with graph databases, particularly <a href="https://neo4j.com/">Neo4j</a>. It allows for the creation, retrieval, and deletion of nodes and relationships in the graph.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.common.graph_db"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.graph_db.GraphDB" class="doc doc-heading">
+            <code>GraphDB</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A class for interacting with a Neo4j graph database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>uri</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The URI of the Neo4j database.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>user</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The username for authentication.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>password</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The password for authentication.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>driver</code></b>
+                  (<code><span title="neo4j.Driver">Driver</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The Neo4j driver instance for managing database connections.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+                <pre class="highlight"><code class="language-python">class GraphDB:
+    """
+    A class for interacting with a Neo4j graph database.
+
+    Parameters
+    ----------
+    uri : str
+        The URI of the Neo4j database.
+    user : str
+        The username for authentication.
+    password : str
+        The password for authentication.
+
+    Attributes
+    ----------
+    driver : neo4j.Driver
+        The Neo4j driver instance for managing database connections.
+    """
+
+    def __init__(self, uri: str, user: str, password: str):
+        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+
+    def close(self):
+        """
+        Close the connection to the Neo4j database.
+
+        Returns
+        -------
+        None
+        """
+        self.driver.close()
+
+    def write_data(self, query: str, parameters: dict = None):
+        """
+        Execute a write query on the Neo4j database.
+
+        Parameters
+        ----------
+        query : str
+            The Cypher query to execute.
+        parameters : dict, optional
+            A dictionary of parameters to pass with the query.
+
+        Returns
+        -------
+        None
+        """
+        with self.driver.session() as session:
+            session.write_transaction(self._execute_query, query, parameters)
+
+    def read_data(self, query: str, parameters: dict = None) -&gt; list:
+        """
+        Execute a read query on the Neo4j database and return the results.
+
+        Parameters
+        ----------
+        query : str
+            The Cypher query to execute.
+        parameters : dict, optional
+            A dictionary of parameters to pass with the query.
+
+        Returns
+        -------
+        list
+            A list of records returned by the query.
+        """
+        with self.driver.session() as session:
+            result = session.read_transaction(
+                self._execute_query, query, parameters)
+            return list(result)
+
+    @staticmethod
+    def _execute_query(tx, query: str, parameters: dict = None):
+        """
+        Helper method to execute a query within a transaction.
+
+        Parameters
+        ----------
+        tx : neo4j.Transaction
+            The transaction object.
+        query : str
+            The Cypher query to execute.
+        parameters : dict, optional
+            A dictionary of parameters to pass with the query.
+
+        Returns
+        -------
+        neo4j.Result
+            The result of the query execution.
+        """
+        return tx.run(query, parameters)</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.graph_db.GraphDB.close" class="doc doc-heading">
+            <code class="highlight language-python">close()</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Close the connection to the Neo4j database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>None</code>
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def close(self):
+    """
+    Close the connection to the Neo4j database.
+
+    Returns
+    -------
+    None
+    """
+    self.driver.close()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.graph_db.GraphDB.write_data" class="doc doc-heading">
+            <code class="highlight language-python">write_data(query, parameters=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Execute a write query on the Neo4j database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The Cypher query to execute.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>parameters</code></b>
+                  (<code>dict</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>A dictionary of parameters to pass with the query.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>None</code>
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def write_data(self, query: str, parameters: dict = None):
+    """
+    Execute a write query on the Neo4j database.
+
+    Parameters
+    ----------
+    query : str
+        The Cypher query to execute.
+    parameters : dict, optional
+        A dictionary of parameters to pass with the query.
+
+    Returns
+    -------
+    None
+    """
+    with self.driver.session() as session:
+        session.write_transaction(self._execute_query, query, parameters)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.graph_db.GraphDB.read_data" class="doc doc-heading">
+            <code class="highlight language-python">read_data(query, parameters=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Execute a read query on the Neo4j database and return the results.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The Cypher query to execute.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>parameters</code></b>
+                  (<code>dict</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>A dictionary of parameters to pass with the query.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>list</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of records returned by the query.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def read_data(self, query: str, parameters: dict = None) -&gt; list:
+    """
+    Execute a read query on the Neo4j database and return the results.
+
+    Parameters
+    ----------
+    query : str
+        The Cypher query to execute.
+    parameters : dict, optional
+        A dictionary of parameters to pass with the query.
+
+    Returns
+    -------
+    list
+        A list of records returned by the query.
+    """
+    with self.driver.session() as session:
+        result = session.read_transaction(
+            self._execute_query, query, parameters)
+        return list(result)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../vector_db/" class="btn btn-neutral float-left" title="VectorDB"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../base_agent/" class="btn btn-neutral float-right" title="Base Agent">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../vector_db/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../base_agent/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

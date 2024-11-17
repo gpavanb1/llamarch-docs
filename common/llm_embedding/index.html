@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>LLM Embedding - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "LLM Embedding";
+        var mkdocs_page_input_path = "common/llm_embedding.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common Components</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../llm/">LLM</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">LLM Embedding</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.llm_embedding">llm_embedding</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.llm_embedding.LLMEmbedding">LLMEmbedding</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.llm_embedding.LLMEmbedding.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.llm_embedding.LLMEmbedding.get_embeddings">get_embeddings</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Patterns</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Common Components</li>
+      <li class="breadcrumb-item active">LLM Embedding</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="llm-embedding">LLM Embedding</h1>
+<p>The <code>LLMEmbedding</code> class is a component in the <code>llamarch</code> library that provides a simple interface to work with LLM embeddings. These provide a way to embed text into a vector space, which can be useful for various applications.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.common.llm_embedding"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.llm_embedding.LLMEmbedding" class="doc doc-heading">
+            <code>LLMEmbedding</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
+                <pre class="highlight"><code class="language-python">class LLMEmbedding:
+    def __init__(self,
+                 model_category: str,
+                 embedding_model_name: str,
+                 api_key: Optional[str] = None,
+                 model_parameters: Optional[Dict[str, Any]] = None):
+        """
+        Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.
+
+        Parameters
+        ----------
+        model_category : str
+            The name of the language model provider (e.g., 'openai', 'huggingface', 'cohere').
+        embedding_model_name : str
+            The name of the embedding model.
+        api_key : str, optional
+            The API key for the selected provider. Default is None.
+        model_parameters : dict, optional
+            Additional parameters for model configuration. Default is an empty dictionary if not provided.
+        """
+        self.model_category = model_category.lower()
+        self.embedding_model_name = embedding_model_name.lower(
+        ) if embedding_model_name else None
+        self.api_key = api_key
+        self.model_parameters = model_parameters or {}
+
+        # Initialize the language model and embedding model
+        self.embedding_model = self._initialize_embeddings()
+
+    def _initialize_embeddings(self):
+        """
+        Initialize the embedding model based on the specified category.
+
+        Returns
+        -------
+        object
+            The initialized embedding model corresponding to the selected provider.
+
+        Raises
+        ------
+        ValueError
+            If an unsupported model category is provided.
+        """
+        if self.model_category == "openai":
+            from langchain_openai import OpenAIEmbeddings
+            return OpenAIEmbeddings(
+                openai_api_key=self.api_key,
+                model=self.embedding_model_name or "text-embedding-ada-002"
+            )
+        elif self.model_category == "huggingface":
+            from langchain_huggingface import HuggingFaceEmbeddings
+            return HuggingFaceEmbeddings(
+                model_name=self.embedding_model_name,
+                encode_kwargs={"device": "cpu", "batch_size": 32}
+            )
+        elif self.model_category == "cohere":
+            from langchain_community.embeddings import CohereEmbeddings
+            return CohereEmbeddings(
+                cohere_api_key=self.api_key,
+                model=self.embedding_model_name
+            )
+        else:
+            raise ValueError(
+                f"Unsupported model category: {self.model_category}")
+
+    def get_embeddings(self, text: str) -&gt; List[float]:
+        """
+        Get embeddings for a given text using the specified embedding model.
+
+        Parameters
+        ----------
+        text : str
+            The input text for which embeddings are needed.
+
+        Returns
+        -------
+        List[float]
+            The embedding vector for the input text.
+        """
+        return self.embedding_model.embed_query(text)</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.llm_embedding.LLMEmbedding.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(model_category, embedding_model_name, api_key=None, model_parameters=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>model_category</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the language model provider (e.g., 'openai', 'huggingface', 'cohere').</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding_model_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the embedding model.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>api_key</code></b>
+                  (<code>str</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The API key for the selected provider. Default is None.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>model_parameters</code></b>
+                  (<code>dict</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Additional parameters for model configuration. Default is an empty dictionary if not provided.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self,
+             model_category: str,
+             embedding_model_name: str,
+             api_key: Optional[str] = None,
+             model_parameters: Optional[Dict[str, Any]] = None):
+    """
+    Initialize the LLM embedding client and (optionally) a separate embedding model based on specified names.
+
+    Parameters
+    ----------
+    model_category : str
+        The name of the language model provider (e.g., 'openai', 'huggingface', 'cohere').
+    embedding_model_name : str
+        The name of the embedding model.
+    api_key : str, optional
+        The API key for the selected provider. Default is None.
+    model_parameters : dict, optional
+        Additional parameters for model configuration. Default is an empty dictionary if not provided.
+    """
+    self.model_category = model_category.lower()
+    self.embedding_model_name = embedding_model_name.lower(
+    ) if embedding_model_name else None
+    self.api_key = api_key
+    self.model_parameters = model_parameters or {}
+
+    # Initialize the language model and embedding model
+    self.embedding_model = self._initialize_embeddings()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.llm_embedding.LLMEmbedding.get_embeddings" class="doc doc-heading">
+            <code class="highlight language-python">get_embeddings(text)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get embeddings for a given text using the specified embedding model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The input text for which embeddings are needed.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[float]</code>
+              –
+              <div class="doc-md-description">
+                <p>The embedding vector for the input text.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/llm_embedding.py</code></summary>
+              <pre class="highlight"><code class="language-python">def get_embeddings(self, text: str) -&gt; List[float]:
+    """
+    Get embeddings for a given text using the specified embedding model.
+
+    Parameters
+    ----------
+    text : str
+        The input text for which embeddings are needed.
+
+    Returns
+    -------
+    List[float]
+        The embedding vector for the input text.
+    """
+    return self.embedding_model.embed_query(text)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../llm/" class="btn btn-neutral float-left" title="LLM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../fine_tuner/" class="btn btn-neutral float-right" title="FineTuner">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../llm/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../fine_tuner/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Base Agent - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Base Agent";
+        var mkdocs_page_input_path = "common/base_agent.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common Components</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Base Agent</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.base_agent">base_agent</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.base_agent.AgentResponse">AgentResponse</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.base_agent.GenerativeAIAgent">GenerativeAIAgent</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.base_agent.GenerativeAIAgent.average_performance">average_performance</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.base_agent.GenerativeAIAgent.generate_response">generate_response</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.base_agent.GenerativeAIAgent.update_performance">update_performance</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Patterns</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Common Components</li>
+      <li class="breadcrumb-item active">Base Agent</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="base-agent">Base Agent</h1>
+<p>The <code>base_agent</code> file contains foundational component for agent interaction. It provides a basic structure for agents that can interact with LLMs and provides basic performance updates.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.common.base_agent"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.base_agent.AgentResponse" class="doc doc-heading">
+            <code>AgentResponse</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Data class to store responses generated by an agent.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>agent_id</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Unique identifier for the agent.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>response</code></b>
+                  (<code><span title="typing.Any">Any</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>The generated response from the language model.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>confidence</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>Confidence score of the response, typically between 0 and 1.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>metadata</code></b>
+                  (<code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Additional metadata about the response, such as model information.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/base_agent.py</code></summary>
+                <pre class="highlight"><code class="language-python">@dataclass
+class AgentResponse:
+    """
+    Data class to store responses generated by an agent.
+
+    Attributes
+    ----------
+    agent_id : str
+        Unique identifier for the agent.
+    response : Any
+        The generated response from the language model.
+    confidence : float
+        Confidence score of the response, typically between 0 and 1.
+    metadata : Dict[str, Any]
+        Additional metadata about the response, such as model information.
+    """
+    agent_id: str
+    response: Any
+    confidence: float
+    metadata: Dict[str, Any]</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.base_agent.GenerativeAIAgent" class="doc doc-heading">
+            <code>GenerativeAIAgent</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A generative AI agent that can generate responses and track performance.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>agent_id</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Unique identifier for the agent.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>llm</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>An instance of the LLM class, initialized with the desired model.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm_embedding.LLMEmbedding" href="../llm_embedding/#llamarch.common.llm_embedding.LLMEmbedding">LLMEmbedding</a></code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>An instance of the LLMEmbedding class, initialized with the desired embedding model (default is None).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/base_agent.py</code></summary>
+                <pre class="highlight"><code class="language-python">class GenerativeAIAgent:
+    """
+    A generative AI agent that can generate responses and track performance.
+
+    Parameters
+    ----------
+    agent_id : str
+        Unique identifier for the agent.
+    llm : LLM
+        An instance of the LLM class, initialized with the desired model.
+    embedding : LLMEmbedding, optional
+        An instance of the LLMEmbedding class, initialized with the desired embedding model (default is None).
+    """
+
+    def __init__(self, agent_id: str, llm: LLM, embedding: Optional[LLMEmbedding] = None):
+        self.agent_id = agent_id
+        self.llm = llm
+        self.embedding = embedding
+        self.performance_history: List[float] = []
+        self.logger = logging.getLogger(f"Agent-{agent_id}")
+
+    async def generate_response(self, query: str) -&gt; AgentResponse:
+        """
+        Generate a response to the given query using the language model.
+
+        Parameters
+        ----------
+        query : str
+            The input query to respond to.
+
+        Returns
+        -------
+        AgentResponse
+            An object containing the response text, confidence score, and metadata.
+
+        Notes
+        -----
+        Currently, the confidence score is set to a default value of 1.0 and can be adjusted based on future requirements.
+        """
+        response_text = self.llm.generate(query)
+        confidence = 1.0  # Placeholder; this could be dynamically calculated if desired
+        metadata = {
+            "model_name": self.llm.model_name
+        }
+        return AgentResponse(agent_id=self.agent_id, response=response_text, confidence=confidence, metadata=metadata)
+
+    def update_performance(self, score: float):
+        """
+        Update the agent's performance history with a new score.
+
+        Parameters
+        ----------
+        score : float
+            The performance score to add to the agent's history.
+
+        Notes
+        -----
+        This method also logs the updated performance score.
+        """
+        self.performance_history.append(score)
+        self.logger.info(f"Agent {self.agent_id} performance updated: {score}")
+
+    @property
+    def average_performance(self) -&gt; float:
+        """
+        Calculate the agent's average performance score.
+
+        Returns
+        -------
+        float
+            The average score from the agent's performance history. Returns 0.0 if no history is available.
+
+        Notes
+        -----
+        This property uses NumPy's `mean` function to compute the average.
+        """
+        return np.mean(self.performance_history) if self.performance_history else 0.0</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="llamarch.common.base_agent.GenerativeAIAgent.average_performance" class="doc doc-heading">
+            <code class="highlight language-python">average_performance: float</code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate the agent's average performance score.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>float</code>
+              –
+              <div class="doc-md-description">
+                <p>The average score from the agent's performance history. Returns 0.0 if no history is available.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>This property uses NumPy's <code>mean</code> function to compute the average.</p>
+</details>    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.base_agent.GenerativeAIAgent.generate_response" class="doc doc-heading">
+            <code class="highlight language-python">generate_response(query)</code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate a response to the given query using the language model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The input query to respond to.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="llamarch.common.base_agent.AgentResponse" href="#llamarch.common.base_agent.AgentResponse">AgentResponse</a></code>
+              –
+              <div class="doc-md-description">
+                <p>An object containing the response text, confidence score, and metadata.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>Currently, the confidence score is set to a default value of 1.0 and can be adjusted based on future requirements.</p>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/base_agent.py</code></summary>
+              <pre class="highlight"><code class="language-python">async def generate_response(self, query: str) -&gt; AgentResponse:
+    """
+    Generate a response to the given query using the language model.
+
+    Parameters
+    ----------
+    query : str
+        The input query to respond to.
+
+    Returns
+    -------
+    AgentResponse
+        An object containing the response text, confidence score, and metadata.
+
+    Notes
+    -----
+    Currently, the confidence score is set to a default value of 1.0 and can be adjusted based on future requirements.
+    """
+    response_text = self.llm.generate(query)
+    confidence = 1.0  # Placeholder; this could be dynamically calculated if desired
+    metadata = {
+        "model_name": self.llm.model_name
+    }
+    return AgentResponse(agent_id=self.agent_id, response=response_text, confidence=confidence, metadata=metadata)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.base_agent.GenerativeAIAgent.update_performance" class="doc doc-heading">
+            <code class="highlight language-python">update_performance(score)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Update the agent's performance history with a new score.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>score</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>The performance score to add to the agent's history.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>This method also logs the updated performance score.</p>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/base_agent.py</code></summary>
+              <pre class="highlight"><code class="language-python">def update_performance(self, score: float):
+    """
+    Update the agent's performance history with a new score.
+
+    Parameters
+    ----------
+    score : float
+        The performance score to add to the agent's history.
+
+    Notes
+    -----
+    This method also logs the updated performance score.
+    """
+    self.performance_history.append(score)
+    self.logger.info(f"Agent {self.agent_id} performance updated: {score}")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../graph_db/" class="btn btn-neutral float-left" title="GraphDB"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../patterns/agent_swarm/" class="btn btn-neutral float-right" title="Agent Swarm">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../graph_db/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../patterns/agent_swarm/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

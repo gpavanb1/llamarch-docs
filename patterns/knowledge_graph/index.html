@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Knowledge Graph - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Knowledge Graph";
+        var mkdocs_page_input_path = "patterns/knowledge_graph.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common Components</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../common/base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Patterns</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Knowledge Graph</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.knowledge_graph">knowledge_graph</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM">KnowledgeLLM</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM.query_knowledge_graph">query_knowledge_graph</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM.update_knowledge_graph">update_knowledge_graph</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM.generate_ontology">generate_ontology</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.patterns.knowledge_graph.KnowledgeLLM.respond_to_query">respond_to_query</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Patterns</li>
+      <li class="breadcrumb-item active">Knowledge Graph</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="knowledge-graph">Knowledge Graph</h1>
+<p><img alt="img" src="../../images/patterns/knowledge_graph.jpg" /></p>
+<p>The <code>KnowledgeGraph</code> class is a component in the <code>llamarch</code> library that provides a simple interface to work with knowledge graphs.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.patterns.knowledge_graph"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.patterns.knowledge_graph.KnowledgeLLM" class="doc doc-heading">
+            <code>KnowledgeLLM</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+                <pre class="highlight"><code class="language-python">class KnowledgeLLM:
+    def __init__(self, knowledge_graph: GraphDB, llm: LLM):
+        """
+        Initialize the KnowledgeLLM with a knowledge graph and a language model.
+
+        Parameters
+        ----------
+        knowledge_graph : GraphDB
+            The knowledge graph instance that will be used to store and retrieve knowledge.
+        llm : LLM
+            The language model instance that will be used to generate ontologies and respond to queries.
+        """
+        self.knowledge_graph = knowledge_graph
+        self.llm = llm
+
+    def query_knowledge_graph(self, query):
+        """
+        Query the knowledge graph for relevant data.
+
+        Parameters
+        ----------
+        query : str
+            The query to be executed on the knowledge graph.
+
+        Returns
+        -------
+        Any
+            The result from the knowledge graph query.
+        """
+        return self.knowledge_graph.read_data(query)
+
+    def update_knowledge_graph(self, query, parameters=None):
+        """
+        Update the knowledge graph with new data.
+
+        Parameters
+        ----------
+        query : str
+            The query to modify the knowledge graph (e.g., adding or updating nodes).
+        parameters : dict, optional
+            Optional parameters for the query (default is None).
+        """
+        self.knowledge_graph.write_data(query, parameters)
+
+    def generate_ontology(self, text):
+        """
+        Generate an ontology from the provided text using the language model.
+
+        Parameters
+        ----------
+        text : str
+            The text from which the ontology will be generated.
+
+        Returns
+        -------
+        str
+            The generated ontology.
+
+        Notes
+        -----
+        The generated ontology will be inserted into the knowledge graph.
+        """
+        prompt = f"Generate an ontology from the following text: {text}"
+        ontology = self.llm.generate(prompt)
+        # Insert the generated ontology into the knowledge graph
+        self.update_knowledge_graph(
+            "CREATE (n:Ontology {data: $ontology})", {"ontology": ontology})
+        return ontology
+
+    def respond_to_query(self, query):
+        """
+        Generate a response to a query by combining information from the knowledge graph and the language model.
+
+        Parameters
+        ----------
+        query : str
+            The query to be answered using both the knowledge graph and language model.
+
+        Returns
+        -------
+        str
+            The generated response to the query.
+
+        Notes
+        -----
+        This method combines the results from a knowledge graph query with the language model's response.
+        """
+        graph_result = self.query_knowledge_graph(query)
+        prompt = f"Given this knowledge: {graph_result}, answer the following query: {query}"
+        print(prompt)
+        return self.llm(prompt)</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(knowledge_graph, llm)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize the KnowledgeLLM with a knowledge graph and a language model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>knowledge_graph</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.graph_db.GraphDB" href="../../common/graph_db/#llamarch.common.graph_db.GraphDB">GraphDB</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>The knowledge graph instance that will be used to store and retrieve knowledge.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>llm</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>The language model instance that will be used to generate ontologies and respond to queries.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, knowledge_graph: GraphDB, llm: LLM):
+    """
+    Initialize the KnowledgeLLM with a knowledge graph and a language model.
+
+    Parameters
+    ----------
+    knowledge_graph : GraphDB
+        The knowledge graph instance that will be used to store and retrieve knowledge.
+    llm : LLM
+        The language model instance that will be used to generate ontologies and respond to queries.
+    """
+    self.knowledge_graph = knowledge_graph
+    self.llm = llm</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.query_knowledge_graph" class="doc doc-heading">
+            <code class="highlight language-python">query_knowledge_graph(query)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Query the knowledge graph for relevant data.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query to be executed on the knowledge graph.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>Any</code>
+              –
+              <div class="doc-md-description">
+                <p>The result from the knowledge graph query.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def query_knowledge_graph(self, query):
+    """
+    Query the knowledge graph for relevant data.
+
+    Parameters
+    ----------
+    query : str
+        The query to be executed on the knowledge graph.
+
+    Returns
+    -------
+    Any
+        The result from the knowledge graph query.
+    """
+    return self.knowledge_graph.read_data(query)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.update_knowledge_graph" class="doc doc-heading">
+            <code class="highlight language-python">update_knowledge_graph(query, parameters=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Update the knowledge graph with new data.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query to modify the knowledge graph (e.g., adding or updating nodes).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>parameters</code></b>
+                  (<code>dict</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Optional parameters for the query (default is None).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def update_knowledge_graph(self, query, parameters=None):
+    """
+    Update the knowledge graph with new data.
+
+    Parameters
+    ----------
+    query : str
+        The query to modify the knowledge graph (e.g., adding or updating nodes).
+    parameters : dict, optional
+        Optional parameters for the query (default is None).
+    """
+    self.knowledge_graph.write_data(query, parameters)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.generate_ontology" class="doc doc-heading">
+            <code class="highlight language-python">generate_ontology(text)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate an ontology from the provided text using the language model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>text</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The text from which the ontology will be generated.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>str</code>
+              –
+              <div class="doc-md-description">
+                <p>The generated ontology.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>The generated ontology will be inserted into the knowledge graph.</p>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def generate_ontology(self, text):
+    """
+    Generate an ontology from the provided text using the language model.
+
+    Parameters
+    ----------
+    text : str
+        The text from which the ontology will be generated.
+
+    Returns
+    -------
+    str
+        The generated ontology.
+
+    Notes
+    -----
+    The generated ontology will be inserted into the knowledge graph.
+    """
+    prompt = f"Generate an ontology from the following text: {text}"
+    ontology = self.llm.generate(prompt)
+    # Insert the generated ontology into the knowledge graph
+    self.update_knowledge_graph(
+        "CREATE (n:Ontology {data: $ontology})", {"ontology": ontology})
+    return ontology</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.patterns.knowledge_graph.KnowledgeLLM.respond_to_query" class="doc doc-heading">
+            <code class="highlight language-python">respond_to_query(query)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate a response to a query by combining information from the knowledge graph and the language model.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>query</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The query to be answered using both the knowledge graph and language model.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>str</code>
+              –
+              <div class="doc-md-description">
+                <p>The generated response to the query.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>This method combines the results from a knowledge graph query with the language model's response.</p>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
+              <pre class="highlight"><code class="language-python">def respond_to_query(self, query):
+    """
+    Generate a response to a query by combining information from the knowledge graph and the language model.
+
+    Parameters
+    ----------
+    query : str
+        The query to be answered using both the knowledge graph and language model.
+
+    Returns
+    -------
+    str
+        The generated response to the query.
+
+    Notes
+    -----
+    This method combines the results from a knowledge graph query with the language model's response.
+    """
+    graph_result = self.query_knowledge_graph(query)
+    prompt = f"Given this knowledge: {graph_result}, answer the following query: {query}"
+    print(prompt)
+    return self.llm(prompt)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../agent_swarm/" class="btn btn-neutral float-left" title="Agent Swarm"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../layered_caching/" class="btn btn-neutral float-right" title="Layered Caching">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../agent_swarm/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../layered_caching/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

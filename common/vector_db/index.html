@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>VectorDB - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "VectorDB";
+        var mkdocs_page_input_path = "common/vector_db.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common Components</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../fine_tuner/">FineTuner</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cache/">Cache</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">VectorDB</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.vector_db">vector_db</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.vector_db.VectorDB">VectorDB</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.vector_db.VectorDB.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.vector_db.VectorDB.add_embeddings">add_embeddings</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.vector_db.VectorDB.query_similar">query_similar</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Patterns</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Common Components</li>
+      <li class="breadcrumb-item active">VectorDB</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="vectordb">VectorDB</h1>
+<p>The <code>VectorDB</code> class is a component in the <code>llamarch</code> library that provides a simple interface to work with vector databases. It allows for the creation, retrieval, and deletion of vectors in the database. Currrently, only the <a href="https://qdrant.tech/">Qdrant</a> vector database is supported.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.common.vector_db"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.vector_db.VectorDB" class="doc doc-heading">
+            <code>VectorDB</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/vector_db.py</code></summary>
+                <pre class="highlight"><code class="language-python">class VectorDB:
+    def __init__(self, db_type="qdrant", api_key=None, environment=None, index_name="default_index", embedding_model=None):
+        """
+        Initialize the vector database client. Currently defaulting only to Qdrant.
+
+        Parameters
+        ----------
+        db_type : str, optional
+            Type of vector database. Default is 'qdrant'.
+        api_key : str, optional
+            API key for the vector database (if required).
+        environment : str, optional
+            Environment or URL for the vector database (if required).
+        index_name : str, optional
+            Name of the index or collection in the vector database. Default is 'default_index'.
+        embedding_model : optional
+            Required for Qdrant, the embedding model used.
+        """
+        self.db_type = db_type.lower()
+        self.api_key = api_key
+        self.environment = environment
+        self.index_name = index_name
+        self.embedding_model = embedding_model
+        self.client = self._initialize_client()
+
+    def _initialize_client(self):
+        """
+        Initialize the client for the specified vector database type.
+
+        Returns
+        -------
+        object
+            The initialized client for the selected vector database.
+
+        Raises
+        ------
+        ValueError
+            If an unsupported db_type is provided.
+        """
+        if self.db_type == "qdrant":
+            from qdrant_client import QdrantClient
+            from langchain_qdrant import QdrantVectorStore
+            client = QdrantClient(api_key=self.api_key, url=self.environment)
+            return QdrantVectorStore(client=client, collection_name=self.index_name, embedding=self.embedding_model)
+
+        else:
+            raise ValueError(f"Unsupported db_type: {self.db_type}")
+
+    def add_embeddings(self, vector_id: str, embedding: List[float], metadata: dict = None):
+        """
+        Add an embedding to the vector database.
+
+        Parameters
+        ----------
+        vector_id : str
+            Unique identifier for the vector.
+        embedding : List[float]
+            The embedding vector to add to the database.
+        metadata : dict, optional
+            Additional metadata to store with the vector. Default is None.
+        """
+        self.client.add_texts(
+            texts=[str(embedding)],
+            metadatas=[metadata],
+            ids=[vector_id]
+        )
+
+    def query_similar(self, embedding: List[float], top_k: int = 5) -&gt; List[Union[dict, str]]:
+        """
+        Query for similar embeddings in the vector database.
+
+        Parameters
+        ----------
+        embedding : List[float]
+            The embedding vector to search for similar vectors.
+        top_k : int, optional
+            Number of similar vectors to retrieve. Default is 5.
+
+        Returns
+        -------
+        List[Union[dict, str]]
+            List of results from the vector database, typically containing metadata and vector information.
+        """
+        results = self.client.similarity_search_by_vector(embedding, k=top_k)
+        return results</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.vector_db.VectorDB.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(db_type='qdrant', api_key=None, environment=None, index_name='default_index', embedding_model=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize the vector database client. Currently defaulting only to Qdrant.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>db_type</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;qdrant&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Type of vector database. Default is 'qdrant'.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>api_key</code></b>
+                  (<code>str</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>API key for the vector database (if required).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>environment</code></b>
+                  (<code>str</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Environment or URL for the vector database (if required).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>index_name</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;default_index&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Name of the index or collection in the vector database. Default is 'default_index'.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding_model</code></b>
+                  (<code>optional</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Required for Qdrant, the embedding model used.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/vector_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, db_type="qdrant", api_key=None, environment=None, index_name="default_index", embedding_model=None):
+    """
+    Initialize the vector database client. Currently defaulting only to Qdrant.
+
+    Parameters
+    ----------
+    db_type : str, optional
+        Type of vector database. Default is 'qdrant'.
+    api_key : str, optional
+        API key for the vector database (if required).
+    environment : str, optional
+        Environment or URL for the vector database (if required).
+    index_name : str, optional
+        Name of the index or collection in the vector database. Default is 'default_index'.
+    embedding_model : optional
+        Required for Qdrant, the embedding model used.
+    """
+    self.db_type = db_type.lower()
+    self.api_key = api_key
+    self.environment = environment
+    self.index_name = index_name
+    self.embedding_model = embedding_model
+    self.client = self._initialize_client()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.vector_db.VectorDB.add_embeddings" class="doc doc-heading">
+            <code class="highlight language-python">add_embeddings(vector_id, embedding, metadata=None)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add an embedding to the vector database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>vector_id</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>Unique identifier for the vector.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>embedding</code></b>
+                  (<code><span title="typing.List">List</span>[float]</code>)
+              –
+              <div class="doc-md-description">
+                <p>The embedding vector to add to the database.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>metadata</code></b>
+                  (<code>dict</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Additional metadata to store with the vector. Default is None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/vector_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def add_embeddings(self, vector_id: str, embedding: List[float], metadata: dict = None):
+    """
+    Add an embedding to the vector database.
+
+    Parameters
+    ----------
+    vector_id : str
+        Unique identifier for the vector.
+    embedding : List[float]
+        The embedding vector to add to the database.
+    metadata : dict, optional
+        Additional metadata to store with the vector. Default is None.
+    """
+    self.client.add_texts(
+        texts=[str(embedding)],
+        metadatas=[metadata],
+        ids=[vector_id]
+    )</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.vector_db.VectorDB.query_similar" class="doc doc-heading">
+            <code class="highlight language-python">query_similar(embedding, top_k=5)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Query for similar embeddings in the vector database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>embedding</code></b>
+                  (<code><span title="typing.List">List</span>[float]</code>)
+              –
+              <div class="doc-md-description">
+                <p>The embedding vector to search for similar vectors.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>top_k</code></b>
+                  (<code>int</code>, default:
+                      <code>5</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Number of similar vectors to retrieve. Default is 5.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[<span title="typing.Union">Union</span>[dict, str]]</code>
+              –
+              <div class="doc-md-description">
+                <p>List of results from the vector database, typically containing metadata and vector information.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/vector_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def query_similar(self, embedding: List[float], top_k: int = 5) -&gt; List[Union[dict, str]]:
+    """
+    Query for similar embeddings in the vector database.
+
+    Parameters
+    ----------
+    embedding : List[float]
+        The embedding vector to search for similar vectors.
+    top_k : int, optional
+        Number of similar vectors to retrieve. Default is 5.
+
+    Returns
+    -------
+    List[Union[dict, str]]
+        List of results from the vector database, typically containing metadata and vector information.
+    """
+    results = self.client.similarity_search_by_vector(embedding, k=top_k)
+    return results</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../cache/" class="btn btn-neutral float-left" title="Cache"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../graph_db/" class="btn btn-neutral float-right" title="GraphDB">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../cache/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../graph_db/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

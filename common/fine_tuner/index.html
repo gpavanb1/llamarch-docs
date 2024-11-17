@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>FineTuner - LLaMArch</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../assets/docs.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "FineTuner";
+        var mkdocs_page_input_path = "common/fine_tuner.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> LLaMArch
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../start/">Getting Started</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../pricing/">Pricing</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common Components</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../llm/">LLM</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../llm_embedding/">LLM Embedding</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">FineTuner</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.fine_tuner">fine_tuner</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llamarch.common.fine_tuner.FineTuner">FineTuner</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.fine_tuner.FineTuner.__init__">__init__</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.fine_tuner.FineTuner.fine_tune">fine_tune</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cache/">Cache</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../vector_db/">VectorDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../graph_db/">GraphDB</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../base_agent/">Base Agent</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Patterns</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/agent_swarm/">Agent Swarm</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/knowledge_graph/">Knowledge Graph</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/layered_caching/">Layered Caching</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/memory_cognition/">Memory Cognition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/multiagent_feedback/">Multi-Agent Feedback</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../patterns/student_teacher/">Student-Teacher</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Tutorials</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/memory_chatbot/">Memory Chatbot</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">LLaMArch</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Documentation</li>
+          <li class="breadcrumb-item">Common Components</li>
+      <li class="breadcrumb-item active">FineTuner</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="finetuner">FineTuner</h1>
+<p>The <code>FineTuner</code> class is a component in the <code>llamarch</code> library that provides a simple interface to work with fine-tuning models.</p>
+<blockquote>
+<p>Note: Fine-tuning is only supported for Hugging Face models in this implementation.</p>
+</blockquote>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="llamarch.common.fine_tuner"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="llamarch.common.fine_tuner.FineTuner" class="doc doc-heading">
+            <code>FineTuner</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Attributes:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>llm</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>An instance of the LLM class, representing the language model to be fine-tuned.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="doc-section-title">Methods:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr class="doc-section-item">
+              <td><code><a class="autorefs autorefs-internal" title="llamarch.common.fine_tuner.FineTuner.fine_tune" href="#llamarch.common.fine_tuner.FineTuner.fine_tune">fine_tune</a></code></td>
+              <td>
+                <div class="doc-md-description">
+                  <p>Fine-tunes the LLM's model with the provided list of texts.</p>
+                </div>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
+                <pre class="highlight"><code class="language-python">class FineTuner:
+    """
+    Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.
+
+    Attributes
+    ----------
+    llm : LLM
+        An instance of the LLM class, representing the language model to be fine-tuned.
+
+    Methods
+    -------
+    fine_tune(texts, output_dir="./fine_tuned_model")
+        Fine-tunes the LLM's model with the provided list of texts.
+    """
+
+    def __init__(self, llm: LLM):
+        """
+        Initializes the FineTuner with an LLM instance.
+
+        Parameters
+        ----------
+        llm : LLM
+            An instance of the LLM class to be fine-tuned.
+        """
+        self.llm = llm
+
+    def fine_tune(self, texts: List[str], output_dir: str = "./fine_tuned_model"):
+        """
+        Fine-tunes the LLM model with the provided list of texts.
+
+        This method tokenizes the input texts, prepares them into a dataset, and trains the model using
+        the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.
+
+        Parameters
+        ----------
+        texts : List[str]
+            A list of strings to be used for training the model.
+        output_dir : str, optional
+            The directory where the fine-tuned model will be saved (default is "./fine_tuned_model").
+
+        Returns
+        -------
+        LLM
+            The LLM instance updated to use the fine-tuned model.
+
+        Raises
+        ------
+        ValueError
+            If the model category of the LLM is not "huggingface".
+        """
+        if self.llm.model_category != "huggingface":
+            raise ValueError(
+                "Fine-tuning is only supported for Hugging Face models in this implementation.")
+
+        # Load the model and tokenizer
+        model = AutoModelForCausalLM.from_pretrained(self.llm.model_name)
+        tokenizer = AutoTokenizer.from_pretrained(self.llm.model_name)
+        # Set pad_token to eos_token
+        tokenizer.pad_token = tokenizer.eos_token
+
+        # Tokenize data
+        encodings = tokenizer(
+            texts,
+            truncation=True,
+            padding="max_length",
+            max_length=512,  # Adjust max_length as needed
+            return_tensors="pt"  # Return PyTorch tensors
+        )
+
+        # Create dataset from encodings
+        train_dataset = CustomDataset(encodings)
+
+        # Set training arguments
+        training_args = TrainingArguments(
+            output_dir=output_dir,
+            eval_strategy="no",
+            learning_rate=2e-5,
+            weight_decay=0.01,
+            num_train_epochs=3,
+            per_device_train_batch_size=8,
+            save_total_limit=2,  # Save only the last 2 models
+            logging_dir='./logs',  # Directory for storing logs
+            logging_steps=10,  # Log every 10 steps
+        )
+
+        # Initialize Trainer
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset
+        )
+
+        # Fine-tune the model
+        trainer.train()
+
+        # Save the fine-tuned model
+        model.save_pretrained(output_dir)
+        tokenizer.save_pretrained(output_dir)
+
+        # Update the LLM instance to use the fine-tuned model
+        self.llm.model_name = output_dir
+        self.llm.model = self.llm._initialize_llm()
+
+        return self.llm</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.fine_tuner.FineTuner.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__(llm)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the FineTuner with an LLM instance.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>llm</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>An instance of the LLM class to be fine-tuned.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self, llm: LLM):
+    """
+    Initializes the FineTuner with an LLM instance.
+
+    Parameters
+    ----------
+    llm : LLM
+        An instance of the LLM class to be fine-tuned.
+    """
+    self.llm = llm</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.fine_tuner.FineTuner.fine_tune" class="doc doc-heading">
+            <code class="highlight language-python">fine_tune(texts, output_dir='./fine_tuned_model')</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fine-tunes the LLM model with the provided list of texts.</p>
+<p>This method tokenizes the input texts, prepares them into a dataset, and trains the model using
+the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>texts</code></b>
+                  (<code><span title="typing.List">List</span>[str]</code>)
+              –
+              <div class="doc-md-description">
+                <p>A list of strings to be used for training the model.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>output_dir</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;./fine_tuned_model&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>The directory where the fine-tuned model will be saved (default is "./fine_tuned_model").</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>
+              –
+              <div class="doc-md-description">
+                <p>The LLM instance updated to use the fine-tuned model.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>ValueError</code>
+              –
+              <div class="doc-md-description">
+                <p>If the model category of the LLM is not "huggingface".</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
+              <pre class="highlight"><code class="language-python">def fine_tune(self, texts: List[str], output_dir: str = "./fine_tuned_model"):
+    """
+    Fine-tunes the LLM model with the provided list of texts.
+
+    This method tokenizes the input texts, prepares them into a dataset, and trains the model using
+    the Hugging Face Trainer API. The fine-tuned model is saved to the specified output directory.
+
+    Parameters
+    ----------
+    texts : List[str]
+        A list of strings to be used for training the model.
+    output_dir : str, optional
+        The directory where the fine-tuned model will be saved (default is "./fine_tuned_model").
+
+    Returns
+    -------
+    LLM
+        The LLM instance updated to use the fine-tuned model.
+
+    Raises
+    ------
+    ValueError
+        If the model category of the LLM is not "huggingface".
+    """
+    if self.llm.model_category != "huggingface":
+        raise ValueError(
+            "Fine-tuning is only supported for Hugging Face models in this implementation.")
+
+    # Load the model and tokenizer
+    model = AutoModelForCausalLM.from_pretrained(self.llm.model_name)
+    tokenizer = AutoTokenizer.from_pretrained(self.llm.model_name)
+    # Set pad_token to eos_token
+    tokenizer.pad_token = tokenizer.eos_token
+
+    # Tokenize data
+    encodings = tokenizer(
+        texts,
+        truncation=True,
+        padding="max_length",
+        max_length=512,  # Adjust max_length as needed
+        return_tensors="pt"  # Return PyTorch tensors
+    )
+
+    # Create dataset from encodings
+    train_dataset = CustomDataset(encodings)
+
+    # Set training arguments
+    training_args = TrainingArguments(
+        output_dir=output_dir,
+        eval_strategy="no",
+        learning_rate=2e-5,
+        weight_decay=0.01,
+        num_train_epochs=3,
+        per_device_train_batch_size=8,
+        save_total_limit=2,  # Save only the last 2 models
+        logging_dir='./logs',  # Directory for storing logs
+        logging_steps=10,  # Log every 10 steps
+    )
+
+    # Initialize Trainer
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset
+    )
+
+    # Fine-tune the model
+    trainer.train()
+
+    # Save the fine-tuned model
+    model.save_pretrained(output_dir)
+    tokenizer.save_pretrained(output_dir)
+
+    # Update the LLM instance to use the fine-tuned model
+    self.llm.model_name = output_dir
+    self.llm.model = self.llm._initialize_llm()
+
+    return self.llm</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../llm_embedding/" class="btn btn-neutral float-left" title="LLM Embedding"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../cache/" class="btn btn-neutral float-right" title="Cache">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../llm_embedding/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../cache/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
