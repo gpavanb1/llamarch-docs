@@ -82,6 +82,10 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.read_data">read_data</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.write_key_value">write_key_value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#llamarch.common.graph_db.GraphDB.read_by_value">read_by_value</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -336,7 +340,62 @@
         neo4j.Result
             The result of the query execution.
         """
-        return tx.run(query, parameters)</code></pre>
+        return tx.run(query, parameters)
+
+    def write_key_value(self, key: str, value: str):
+        """
+        Execute a write query on the Neo4j database.
+
+        Parameters
+        ----------
+        key : str
+            The key to be used to store the value
+        value : str
+            The value to be stored
+
+        Returns
+        -------
+        None
+        """
+        with self.driver.session() as session:
+            query = """
+            MERGE (n:Data {key: $key})
+            SET n.value = $value
+            RETURN n
+            """
+            result = session.run(query, key=key, value=value)
+
+            # Print the result (the created or updated node)
+            for record in result:
+                print(f"Upserted Node: {record['n']}")
+
+    def read_by_value(self, value: str) -&gt; list:
+        """
+        Execute a read on the Neo4j database to find nodes based on the value.
+
+        Parameters
+        ----------
+        value : str
+            The value to search for in the database
+
+        Returns
+        -------
+        str
+            The key associated with the value if found, else None
+        """
+        with self.driver.session() as session:
+            query = """
+            MATCH (n:Data {value: $value})
+            RETURN n.key AS key
+            """
+            result = session.run(query, value=value)
+
+            # Return the key if the node is found, otherwise None
+            for record in result:
+                return record["key"]
+
+        # If no key is found for the value, return None
+        return None</code></pre>
               </details>
 
 
@@ -589,6 +648,201 @@
         result = session.read_transaction(
             self._execute_query, query, parameters)
         return list(result)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.graph_db.GraphDB.write_key_value" class="doc doc-heading">
+            <code class="highlight language-python">write_key_value(key, value)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Execute a write query on the Neo4j database.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>key</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The key to be used to store the value</p>
+              </div>
+            </li>
+            <li>
+              <b><code>value</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The value to be stored</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>None</code>
+              –
+              <div class="doc-md-description">
+                
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def write_key_value(self, key: str, value: str):
+    """
+    Execute a write query on the Neo4j database.
+
+    Parameters
+    ----------
+    key : str
+        The key to be used to store the value
+    value : str
+        The value to be stored
+
+    Returns
+    -------
+    None
+    """
+    with self.driver.session() as session:
+        query = """
+        MERGE (n:Data {key: $key})
+        SET n.value = $value
+        RETURN n
+        """
+        result = session.run(query, key=key, value=value)
+
+        # Print the result (the created or updated node)
+        for record in result:
+            print(f"Upserted Node: {record['n']}")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="llamarch.common.graph_db.GraphDB.read_by_value" class="doc doc-heading">
+            <code class="highlight language-python">read_by_value(value)</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Execute a read on the Neo4j database to find nodes based on the value.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>value</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The value to search for in the database</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code>str</code>
+              –
+              <div class="doc-md-description">
+                <p>The key associated with the value if found, else None</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>llamarch/common/graph_db.py</code></summary>
+              <pre class="highlight"><code class="language-python">def read_by_value(self, value: str) -&gt; list:
+    """
+    Execute a read on the Neo4j database to find nodes based on the value.
+
+    Parameters
+    ----------
+    value : str
+        The value to search for in the database
+
+    Returns
+    -------
+    str
+        The key associated with the value if found, else None
+    """
+    with self.driver.session() as session:
+        query = """
+        MATCH (n:Data {value: $value})
+        RETURN n.key AS key
+        """
+        result = session.run(query, value=value)
+
+        # Return the key if the node is found, otherwise None
+        for record in result:
+            return record["key"]
+
+    # If no key is found for the value, return None
+    return None</code></pre>
             </details>
     </div>
 
