@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://gpavanb1.github.io/llamarch-docs/start/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://gpavanb1.github.io/llamarch-docs/license/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Getting Started - LLaMArch</title>
+    <title>License - LLaMArch</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,9 +14,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Getting Started";
-        var mkdocs_page_input_path = "start.md";
-        var mkdocs_page_url = "/llamarch-docs/start/";
+        var mkdocs_page_name = "License";
+        var mkdocs_page_input_path = "license.md";
+        var mkdocs_page_url = "/llamarch-docs/license/";
       </script>
     
     <!--[if lt IE 9]>
@@ -42,18 +42,26 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting Started</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../start/">Getting Started</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../pricing/">Pricing</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">License</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#non-commercial-license-for-research-and-personal-use">Non-Commercial License (For Research and Personal Use)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#commercial-license">Commercial License</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#disclaimer-of-warranty">Disclaimer of Warranty</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#limitation-of-liability">Limitation of Liability</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Code Documentation</span></p>
@@ -109,7 +117,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="breadcrumb-item active">License</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -118,81 +126,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="getting-started">Getting Started</h1>
-<p>Just run </p>
-<pre><code>pip install llamarch
-</code></pre>
-<p>A basic program is as follows that illustrates the key common components of the framework.</p>
-<pre><code class="language-python">import uuid
-from llamarch.common.llm import LLM
-from llamarch.common.llm_embedding import LLMEmbedding
-from llamarch.common.fine_tuner import FineTuner
-from llamarch.common.cache import Cache
-from llamarch.common.vector_db import VectorDB
-from llamarch.common.graph_db import GraphDB
-from llamarch.common.base_agent import GenerativeAIAgent
-
-# Initialize the LLM class
-llm = LLM(model_category=&quot;huggingface&quot;,
-          model_name=&quot;distilbert/distilgpt2&quot;)
-
-# Initialize the LLMEmbedding class
-embedding = LLMEmbedding(model_category=&quot;huggingface&quot;,
-                         embedding_model_name=&quot;distilbert-base-uncased&quot;)
-
-# Initialize the FineTuner class
-fine_tuner = FineTuner(llm)
-
-# Initialize the Cache class
-cache = Cache()
-
-# Initialize the VectorDB class
-vector_db = VectorDB(db_type=&quot;qdrant&quot;, environment=&quot;http://localhost:6333&quot;,
-                     index_name=&quot;default_index&quot;, embedding_model=embedding.embedding_model)
-
-# Initialize the GraphDB class
-graph_db = GraphDB(&quot;bolt://localhost:7687&quot;, &quot;neo4j&quot;, &quot;testpassword&quot;)
-
-# Initialize the GenerativeAIAgent class
-agent = GenerativeAIAgent(agent_id=&quot;agent1&quot;, llm=llm, embedding=embedding)
-
-# Generate a response from the LLM
-query = &quot;Hello, how are you?&quot;
-agent_reply = agent.llm.generate(query)
-print(f&quot;Agent reply: {agent_reply}&quot;)
-
-# Fine-tune the LLM
-fine_tuner.fine_tune([query])
-
-# Cache the LLM
-cache.set(query, agent_reply)
-
-# Query the cache
-cached_response = cache.get(query)
-print(f&quot;Cached response: {cached_response}&quot;)
-
-# Store in VectorDB
-info_id = str(uuid.uuid4())
-vector_db.add_embeddings(
-    info_id, embedding.get_embeddings(query), metadata={&quot;query&quot;: query})
-
-# Store in GraphDB
-graph_db.write_key_value(info_id, query)
-
-# Query the VectorDB
-vector_db_response = vector_db.query_similar(embedding.get_embeddings(query))
-print(f&quot;VectorDB response: {vector_db_response}&quot;)
-
-# Query the GraphDB
-graph_db_response = graph_db.read_by_value(query)
-print(f&quot;GraphDB response: {graph_db_response}&quot;)
-</code></pre>
+                <h1 id="license">License</h1>
+<h2 id="non-commercial-license-for-research-and-personal-use">Non-Commercial License (For Research and Personal Use)</h2>
+<p>This project is licensed under the <strong>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</strong>. You are free to:</p>
+<ul>
+<li>Share — copy and redistribute the material in any medium or format.</li>
+<li>Adapt — remix, transform, and build upon the material.</li>
+</ul>
+<p>Under the following terms:</p>
+<ul>
+<li><strong>Attribution</strong> — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</li>
+<li><strong>Non-Commercial</strong> — You may not use the material for commercial purposes.</li>
+</ul>
+<p>Full license details can be found at: <a href="https://creativecommons.org/licenses/by-nc/4.0/">https://creativecommons.org/licenses/by-nc/4.0/</a></p>
+<h2 id="commercial-license">Commercial License</h2>
+<p>For commercial use, you must obtain a separate commercial license. This includes any usage in a business context or in products or services offered for sale.</p>
+<p>To obtain a commercial license, please submit a request <a href="https://docs.google.com/forms/d/e/1FAIpQLScsh9lAv9pYtg_xyvXinCcfaW6Y-KnUWRgcYLpU1_vXSk_EUg/viewform?usp=pp_url&amp;entry.1547099900=LLaMArch">here</a></p>
+<h2 id="disclaimer-of-warranty">Disclaimer of Warranty</h2>
+<p>This project is provided "as is", without any warranties or guarantees. To the extent permitted by applicable law, the author(s) make no representations or warranties of any kind concerning the software, either express or implied, including, but not limited to, warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+<h2 id="limitation-of-liability">Limitation of Liability</h2>
+<p>In no event shall the author(s) be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.</p>
+<hr />
+<p><strong>Note:</strong> By using this software, you agree to the terms specified above. If you do not agree with these terms, do not use this software.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../pricing/" class="btn btn-neutral float-right" title="Pricing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../pricing/" class="btn btn-neutral float-left" title="Pricing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -215,10 +176,10 @@ print(f&quot;GraphDB response: {graph_db_response}&quot;)
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../pricing/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../pricing/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../overview/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
