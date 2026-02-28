@@ -155,7 +155,10 @@
 
 
 
-  <div class="doc doc-children">
+
+
+<div class="doc doc-children">
+
 
 
 
@@ -176,6 +179,8 @@
 
 
     <div class="doc doc-contents ">
+
+
 
 
 
@@ -275,8 +280,8 @@
 <span class="normal">92</span>
 <span class="normal">93</span>
 <span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">KnowledgeLLM</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">KnowledgeLLM</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the KnowledgeLLM with a knowledge graph and a language model.</span>
 
@@ -290,7 +295,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span> <span class="o">=</span> <span class="n">knowledge_graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
 
-    <span class="k">def</span> <span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Query the knowledge graph for relevant data.</span>
 
@@ -306,7 +311,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the knowledge graph with new data.</span>
 
@@ -319,7 +324,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">knowledge_graph</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an ontology from the provided text using the language model.</span>
 
@@ -344,7 +349,7 @@
             <span class="s2">&quot;CREATE (n:Ontology {data: $ontology})&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;ontology&quot;</span><span class="p">:</span> <span class="n">ontology</span><span class="p">})</span>
         <span class="k">return</span> <span class="n">ontology</span>
 
-    <span class="k">def</span> <span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a response to a query by combining information from the knowledge graph and the language model.</span>
 
@@ -371,7 +376,8 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
+
 
 
 
@@ -407,7 +413,7 @@
         <ul class="first simple">
             <li>
               <b><code>knowledge_graph</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.graph_db.GraphDB" href="../../common/graph_db/#llamarch.common.graph_db.GraphDB">GraphDB</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="GraphDB (llamarch.common.graph_db.GraphDB)" href="../../common/graph_db/#llamarch.common.graph_db.GraphDB">GraphDB</a></code>)
               –
               <div class="doc-md-description">
                 <p>The knowledge graph instance that will be used to store and retrieve knowledge.</p>
@@ -415,7 +421,7 @@
             </li>
             <li>
               <b><code>llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>The language model instance that will be used to generate ontologies and respond to queries.</p>
@@ -426,7 +432,8 @@
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
 <span class="normal"> 7</span>
@@ -440,7 +447,7 @@
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
-<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_graph</span><span class="p">:</span> <span class="n">GraphDB</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize the KnowledgeLLM with a knowledge graph and a language model.</span>
 
@@ -485,7 +492,7 @@
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query to be executed on the knowledge graph.</p>
@@ -508,7 +515,7 @@
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>Any</code>
+                  <code><span title="Any">Any</span></code>
               –
               <div class="doc-md-description">
                 <p>The result from the knowledge graph query.</p>
@@ -519,7 +526,8 @@
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
 <span class="normal">21</span>
@@ -535,7 +543,7 @@
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
-<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">query_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Query the knowledge graph for relevant data.</span>
 
@@ -582,7 +590,7 @@
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query to modify the knowledge graph (e.g., adding or updating nodes).</p>
@@ -590,7 +598,7 @@
             </li>
             <li>
               <b><code>parameters</code></b>
-                  (<code>dict</code>, default:
+                  (<code><span title="dict">dict</span></code>, default:
                       <code>None</code>
 )
               –
@@ -603,7 +611,8 @@
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
 <span class="normal">37</span>
@@ -616,7 +625,7 @@
 <span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
-<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update_knowledge_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update the knowledge graph with new data.</span>
 
@@ -660,7 +669,7 @@
         <ul class="first simple">
             <li>
               <b><code>text</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The text from which the ontology will be generated.</p>
@@ -683,7 +692,7 @@
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>str</code>
+                  <code><span title="str">str</span></code>
               –
               <div class="doc-md-description">
                 <p>The generated ontology.</p>
@@ -699,7 +708,8 @@
   <summary>Notes</summary>
   <p>The generated ontology will be inserted into the knowledge graph.</p>
 </details>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
 <span class="normal">50</span>
@@ -724,7 +734,7 @@
 <span class="normal">69</span>
 <span class="normal">70</span>
 <span class="normal">71</span>
-<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_ontology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate an ontology from the provided text using the language model.</span>
 
@@ -780,7 +790,7 @@
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query to be answered using both the knowledge graph and language model.</p>
@@ -803,7 +813,7 @@
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>str</code>
+                  <code><span title="str">str</span></code>
               –
               <div class="doc-md-description">
                 <p>The generated response to the query.</p>
@@ -819,7 +829,8 @@
   <summary>Notes</summary>
   <p>This method combines the results from a knowledge graph query with the language model's response.</p>
 </details>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/knowledge_graph/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
 <span class="normal">75</span>
@@ -842,7 +853,7 @@
 <span class="normal">92</span>
 <span class="normal">93</span>
 <span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">respond_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a response to a query by combining information from the knowledge graph and the language model.</span>
 
@@ -875,6 +886,7 @@
   </div>
 
     </div>
+
 
 </div>
 

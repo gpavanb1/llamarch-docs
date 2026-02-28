@@ -151,7 +151,10 @@
 
 
 
-  <div class="doc doc-children">
+
+
+<div class="doc doc-children">
+
 
 
 
@@ -172,6 +175,7 @@
 
 
     <div class="doc doc-contents ">
+
 
 
         <p>A class representing a system where a student and teacher interact, with the student generating 
@@ -220,7 +224,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
       </thead>
       <tbody>
             <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="llamarch.patterns.student_teacher.StudentTeacher.generate_response" href="#llamarch.patterns.student_teacher.StudentTeacher.generate_response">generate_response</a></code></td>
+              <td><code><a class="autorefs autorefs-internal" title="generate_response(query) (llamarch.patterns.student_teacher.StudentTeacher.generate_response)" href="#llamarch.patterns.student_teacher.StudentTeacher.generate_response">generate_response</a></code></td>
               <td>
                 <div class="doc-md-description">
                   <p>Generates a response from both the student and teacher LLMs for a given query.</p>
@@ -228,7 +232,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
               </td>
             </tr>
             <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="llamarch.patterns.student_teacher.StudentTeacher.train_student" href="#llamarch.patterns.student_teacher.StudentTeacher.train_student">train_student</a></code></td>
+              <td><code><a class="autorefs autorefs-internal" title="train_student(data) (llamarch.patterns.student_teacher.StudentTeacher.train_student)" href="#llamarch.patterns.student_teacher.StudentTeacher.train_student">train_student</a></code></td>
               <td>
                 <div class="doc-md-description">
                   <p>Fine-tunes the student model using provided training data.</p>
@@ -237,6 +241,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
             </tr>
       </tbody>
     </table>
+
 
 
 
@@ -312,7 +317,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">StudentTeacher</span><span class="p">:</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StudentTeacher</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class representing a system where a student and teacher interact, with the student generating </span>
 <span class="sd">    responses and the teacher evaluating those responses. The teacher uses feedback to train the student.</span>
@@ -332,7 +337,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 <span class="sd">        Fine-tunes the student model using provided training data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the StudentTeacher system with a student and teacher.</span>
 
@@ -346,7 +351,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
         <span class="bp">self</span><span class="o">.</span><span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">student_llm</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="n">teacher_llm</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a response from both the student and teacher LLMs based on a query. </span>
 <span class="sd">        The student generates a response which is then evaluated by the teacher.</span>
@@ -370,7 +375,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
             <span class="n">student_response</span><span class="p">[:</span><span class="n">MAX_LENGTH</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">student_response</span><span class="p">,</span> <span class="n">teacher_response</span>
 
-    <span class="k">def</span> <span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fine-tunes the student model using the provided training data.</span>
 
@@ -385,7 +390,8 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
+
 
 
 
@@ -421,7 +427,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
         <ul class="first simple">
             <li>
               <b><code>student_llm</code></b>
-                  (<code>object</code>)
+                  (<code><span title="object">object</span></code>)
               –
               <div class="doc-md-description">
                 <p>The language model (LLM) used by the student for generating responses.</p>
@@ -429,7 +435,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
             </li>
             <li>
               <b><code>teacher_llm</code></b>
-                  (<code>object</code>)
+                  (<code><span title="object">object</span></code>)
               –
               <div class="doc-md-description">
                 <p>The language model (LLM) used by the teacher to evaluate student responses.</p>
@@ -440,7 +446,8 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
 <span class="normal">29</span>
@@ -454,7 +461,7 @@ responses and the teacher evaluating those responses. The teacher uses feedback 
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_llm</span><span class="p">,</span> <span class="n">teacher_llm</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializes the StudentTeacher system with a student and teacher.</span>
 
@@ -500,7 +507,7 @@ The student generates a response which is then evaluated by the teacher.</p>
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query to be processed by the student and teacher.</p>
@@ -523,7 +530,7 @@ The student generates a response which is then evaluated by the teacher.</p>
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>tuple</code>
+                  <code><span title="tuple">tuple</span></code>
               –
               <div class="doc-md-description">
                 <p>A tuple containing:
@@ -538,7 +545,8 @@ The student generates a response which is then evaluated by the teacher.</p>
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
 <span class="normal">43</span>
@@ -562,7 +570,7 @@ The student generates a response which is then evaluated by the teacher.</p>
 <span class="normal">61</span>
 <span class="normal">62</span>
 <span class="normal">63</span>
-<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a response from both the student and teacher LLMs based on a query. </span>
 <span class="sd">    The student generates a response which is then evaluated by the teacher.</span>
@@ -617,7 +625,7 @@ The student generates a response which is then evaluated by the teacher.</p>
         <ul class="first simple">
             <li>
               <b><code>data</code></b>
-                  (<code>iterable</code>)
+                  (<code><span title="iterable">iterable</span></code>)
               –
               <div class="doc-md-description">
                 <p>The data used for fine-tuning the student's model.</p>
@@ -628,7 +636,8 @@ The student generates a response which is then evaluated by the teacher.</p>
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/student_teacher/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
 <span class="normal">67</span>
@@ -639,7 +648,7 @@ The student generates a response which is then evaluated by the teacher.</p>
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fine-tunes the student model using the provided training data.</span>
 
@@ -660,6 +669,7 @@ The student generates a response which is then evaluated by the teacher.</p>
   </div>
 
     </div>
+
 
 </div>
 

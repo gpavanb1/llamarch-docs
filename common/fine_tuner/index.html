@@ -151,7 +151,10 @@
 
 
 
-  <div class="doc doc-children">
+
+
+<div class="doc doc-children">
+
 
 
 
@@ -174,6 +177,7 @@
     <div class="doc doc-contents ">
 
 
+
         <p>Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.</p>
 
 
@@ -189,7 +193,7 @@
         <ul class="first simple">
             <li>
               <b><code>llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>An instance of the LLM class, representing the language model to be fine-tuned.</p>
@@ -211,7 +215,7 @@
       </thead>
       <tbody>
             <tr class="doc-section-item">
-              <td><code><a class="autorefs autorefs-internal" title="llamarch.common.fine_tuner.FineTuner.fine_tune" href="#llamarch.common.fine_tuner.FineTuner.fine_tune">fine_tune</a></code></td>
+              <td><code><a class="autorefs autorefs-internal" title="fine_tune(texts, output_dir='./fine_tuned_model') (llamarch.common.fine_tuner.FineTuner.fine_tune)" href="#llamarch.common.fine_tuner.FineTuner.fine_tune">fine_tune</a></code></td>
               <td>
                 <div class="doc-md-description">
                   <p>Fine-tunes the LLM's model with the provided list of texts.</p>
@@ -220,6 +224,7 @@
             </tr>
       </tbody>
     </table>
+
 
 
 
@@ -331,7 +336,7 @@
 <span class="normal">130</span>
 <span class="normal">131</span>
 <span class="normal">132</span>
-<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">FineTuner</span><span class="p">:</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FineTuner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fine-tuner class for fine-tuning a Hugging Face language model (LLM) with custom data.</span>
 
@@ -346,7 +351,7 @@
 <span class="sd">        Fine-tunes the LLM&#39;s model with the provided list of texts.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the FineTuner with an LLM instance.</span>
 
@@ -357,7 +362,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
 
-    <span class="k">def</span> <span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fine-tunes the LLM model with the provided list of texts.</span>
 
@@ -440,7 +445,8 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
+
 
 
 
@@ -476,7 +482,7 @@
         <ul class="first simple">
             <li>
               <b><code>llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>An instance of the LLM class to be fine-tuned.</p>
@@ -487,7 +493,8 @@
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
 <span class="normal">46</span>
@@ -498,7 +505,7 @@
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">LLM</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializes the FineTuner with an LLM instance.</span>
 
@@ -542,7 +549,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
         <ul class="first simple">
             <li>
               <b><code>texts</code></b>
-                  (<code><span title="typing.List">List</span>[str]</code>)
+                  (<code><span title="typing.List">List</span>[<span title="str">str</span>]</code>)
               –
               <div class="doc-md-description">
                 <p>A list of strings to be used for training the model.</p>
@@ -550,7 +557,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
             </li>
             <li>
               <b><code>output_dir</code></b>
-                  (<code>str</code>, default:
+                  (<code><span title="str">str</span></code>, default:
                       <code>&#39;./fine_tuned_model&#39;</code>
 )
               –
@@ -575,7 +582,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>
+                  <code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../llm/#llamarch.common.llm.LLM">LLM</a></code>
               –
               <div class="doc-md-description">
                 <p>The LLM instance updated to use the fine-tuned model.</p>
@@ -598,7 +605,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>ValueError</code>
+                  <code><span title="ValueError">ValueError</span></code>
               –
               <div class="doc-md-description">
                 <p>If the model category of the LLM is not "huggingface".</p>
@@ -609,7 +616,8 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/common/fine_tuner.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 56</span>
 <span class="normal"> 57</span>
@@ -688,7 +696,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
 <span class="normal">130</span>
 <span class="normal">131</span>
 <span class="normal">132</span>
-<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fine_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./fine_tuned_model&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fine-tunes the LLM model with the provided list of texts.</span>
 
@@ -777,6 +785,7 @@ the Hugging Face Trainer API. The fine-tuned model is saved to the specified out
   </div>
 
     </div>
+
 
 </div>
 

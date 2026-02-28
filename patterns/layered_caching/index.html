@@ -151,7 +151,10 @@
 
 
 
-  <div class="doc doc-children">
+
+
+<div class="doc doc-children">
+
 
 
 
@@ -172,6 +175,8 @@
 
 
     <div class="doc doc-contents ">
+
+
 
 
 
@@ -265,8 +270,8 @@
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">LayeredCaching</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">large_llm</span><span class="p">,</span> <span class="n">small_llm</span><span class="p">):</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LayeredCaching</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">large_llm</span><span class="p">,</span> <span class="n">small_llm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the LayeredCaching system with a large LLM, a small LLM, and a caching mechanism.</span>
 
@@ -293,7 +298,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">specialized_llm</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># This will be set after fine-tuning</span>
 
-    <span class="k">def</span> <span class="nf">handle_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle a query by checking the cache, generating a response using the large LLM if not cached,</span>
 <span class="sd">        and fine-tuning the smaller LLM based on cached results.</span>
@@ -331,7 +336,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fine-tuned model loaded&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">handle_future_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_future_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle future queries using the specialized fine-tuned smaller LLM.</span>
 
@@ -355,7 +360,8 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
+
 
 
 
@@ -391,7 +397,7 @@
         <ul class="first simple">
             <li>
               <b><code>large_llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>The large language model used to generate responses for queries that are not cached.</p>
@@ -399,7 +405,7 @@
             </li>
             <li>
               <b><code>small_llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>The smaller language model used for fine-tuning based on cached results.</p>
@@ -423,7 +429,7 @@
         <ul class="first simple">
             <li>
               <b><code>large_llm</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a></code>)
               –
               <div class="doc-md-description">
                 <p>The large language model used to handle uncached queries.</p>
@@ -431,7 +437,7 @@
             </li>
             <li>
               <b><code>fine_tuner</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.fine_tuner.FineTuner" href="../../common/fine_tuner/#llamarch.common.fine_tuner.FineTuner">FineTuner</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="FineTuner (llamarch.common.fine_tuner.FineTuner)" href="../../common/fine_tuner/#llamarch.common.fine_tuner.FineTuner">FineTuner</a></code>)
               –
               <div class="doc-md-description">
                 <p>Fine-tuner instance responsible for fine-tuning the small LLM based on cached data.</p>
@@ -439,7 +445,7 @@
             </li>
             <li>
               <b><code>cache</code></b>
-                  (<code><a class="autorefs autorefs-internal" title="llamarch.common.cache.Cache" href="../../common/cache/#llamarch.common.cache.Cache">Cache</a></code>)
+                  (<code><a class="autorefs autorefs-internal" title="Cache (llamarch.common.cache.Cache)" href="../../common/cache/#llamarch.common.cache.Cache">Cache</a></code>)
               –
               <div class="doc-md-description">
                 <p>Cache instance used to store query results for later retrieval.</p>
@@ -447,7 +453,7 @@
             </li>
             <li>
               <b><code>specialized_llm</code></b>
-                  (<code>(<a class="autorefs autorefs-internal" title="llamarch.common.llm.LLM" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a>, optional)</code>)
+                  (<code>(<a class="autorefs autorefs-internal" title="LLM (llamarch.common.llm.LLM)" href="../../common/llm/#llamarch.common.llm.LLM">LLM</a>, <span title="optional">optional</span>)</code>)
               –
               <div class="doc-md-description">
                 <p>A fine-tuned version of the small LLM, set after fine-tuning based on cached data.</p>
@@ -458,7 +464,8 @@
     </tr>
   </tbody>
 </table>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/layered_caching/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
 <span class="normal"> 8</span>
@@ -485,7 +492,7 @@
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
-<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">large_llm</span><span class="p">,</span> <span class="n">small_llm</span><span class="p">):</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">large_llm</span><span class="p">,</span> <span class="n">small_llm</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize the LayeredCaching system with a large LLM, a small LLM, and a caching mechanism.</span>
 
@@ -544,7 +551,7 @@ and fine-tuning the smaller LLM based on cached results.</p>
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query for which a response is needed.</p>
@@ -567,7 +574,7 @@ and fine-tuning the smaller LLM based on cached results.</p>
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>str</code>
+                  <code><span title="str">str</span></code>
               –
               <div class="doc-md-description">
                 <p>The response to the query, either from the cache or generated by the large LLM.</p>
@@ -584,7 +591,8 @@ and fine-tuning the smaller LLM based on cached results.</p>
   <p>This method fine-tunes the small LLM using the cached data once the cache is populated.
 If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
 </details>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/layered_caching/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
 <span class="normal">35</span>
@@ -622,7 +630,7 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
 <span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">handle_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handle a query by checking the cache, generating a response using the large LLM if not cached,</span>
 <span class="sd">    and fine-tuning the smaller LLM based on cached results.</span>
@@ -691,7 +699,7 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
         <ul class="first simple">
             <li>
               <b><code>query</code></b>
-                  (<code>str</code>)
+                  (<code><span title="str">str</span></code>)
               –
               <div class="doc-md-description">
                 <p>The query for which a response is needed.</p>
@@ -714,7 +722,7 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
       <td class="field-body">
         <ul class="first simple">
             <li>
-                  <code>str</code>
+                  <code><span title="str">str</span></code>
               –
               <div class="doc-md-description">
                 <p>The response to the query, generated by the fine-tuned smaller LLM.</p>
@@ -730,7 +738,8 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
   <summary>Notes</summary>
   <p>This method assumes that the small LLM has already been fine-tuned using cached data.</p>
 </details>
-            <details class="quote">
+
+            <details class="mkdocstrings-source">
               <summary>Source code in <code>llamarch/patterns/layered_caching/__init__.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
 <span class="normal">73</span>
@@ -750,7 +759,7 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">handle_future_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_future_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handle future queries using the specialized fine-tuned smaller LLM.</span>
 
@@ -780,6 +789,7 @@ If the smaller LLM is not yet specialized, it will be fine-tuned and loaded.</p>
   </div>
 
     </div>
+
 
 </div>
 
